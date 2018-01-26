@@ -1,0 +1,458 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+                <div class="uk-width-3-4">
+                    <h1>Verhaltensprofile</h1>
+
+                    <div class='page_content'>
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p>
+                        <div id="behaviorProfiles" class="uk-panel uk-panel-box uk-panel-box-secondary">
+                            <form id="cardForm">
+                                <div class="uk-alert uk-alert-danger"></div>
+                                <div class="counterBox">
+                                    <h3 class="uk-panel-title" id="counterProfile">Frage 1</h3>
+                                    <p style="margin-top: -14px;">Bitte klicken Sie auf die Box mit der zutreffenden Beschreibung</p>
+                                </div>
+                                <div class="cards">
+                                    <div id="card0" class="profileCard" style="display:block;">
+                                        <p>
+                                            <b>Bezeichnung der Position</b>
+                                            <input name="postion" type="text" maxlength="100" class="form-control" value="">
+                                        </p>
+                                        <p>
+                                            <b>Abteilung</b>
+                                            <input name="department" type="text" maxlength="100" class="form-control" value="">
+                                        </p>
+                                        <p>
+                                            <b style="display:block;">Standort</b>
+                                            <select name="country" class="form-control" style="display: inline-block;">
+                                                <?php foreach ($this->arrCountry as $country){ ?>
+                                                <option value="<?=$country->id?>"><?=$country->name?></option>
+                                                <?php } ?>
+                                            </select>
+                                            <input value="" name="zip" maxlength="10" placeholder="PLZ" name="user_location" type="text" class="form-control">
+                                            <input value="" name="location" maxlength="55" placeholder="Ort" name="user_location" type="text" class="form-control">
+                                        </p>
+                                        <p>
+                                            <b>Funktion</b>
+                                            <select name="function" class="form-control">
+                                                <option value="0">bitte Funktion wählen</option>
+                                                <?php foreach ($this->arrFunction as $function){ ?>
+                                                <option value="<?=$function->id?>"><?=$function->name?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </p>
+                                    </div>
+                                    <div id="cardAnswer"class="profileCard profileCardAnswer">
+                                        <div>
+                                            <h3>Ansprache Kandidat</h3>
+                                            <div class="addressBox"></div>
+                                        </div>
+                                        <div>
+                                            <h3>Kurzbezeichnung der Aufgabe</h3>
+                                            <div class="jobBox"></div>
+                                        </div>
+                                        <div>
+                                            <h3>Beschreibende Eigenschaften</h3>
+                                            <div class="propertiesBox"></div>
+                                        </div>
+                                        <div>
+                                            <h3 color="color: #118734">Was frustriert und demotiviert den Kandidaten</h3>
+                                            <div class="demotivatedBox"></div>
+                                        </div>
+                                        <div>
+                                            <h3>Wird motiviert durch Worte und Darstellungen wie</h3>
+                                            <div class="positiveBox"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button">
+                                    <a class="uk-button" id="abortButton">Abbrechen</a>
+                                    <a class="uk-button" id="nextButton">Weiter <i class="uk-icon-angle-double-right"></i></a>
+                                    <a class="uk-button" id="noSaveButton">Nicht Speichern & Zurück</a>
+                                    <a class="uk-button" id="saveButton">Speichern & Zurück</i></a>
+                                </div>
+                            </form>
+                        </div>
+                        <?php if(count($this->arrResults) > 0): ?>
+                        <div id="behaviorProfilesResults" class="uk-panel uk-panel-box uk-panel-box-secondary behaviorProfilesSaved">
+                            <h3>Gespeicherte Ergebnisse</h3>
+                            <ul class="uk-list uk-list-striped">
+                                <?php foreach ($this->arrResults as $result):?>
+                                <li>
+                                    <div class="header">
+                                        <h3><?=utf8_encode($result['postion']);?></h3>
+                                        <i class="uk-icon-chevron-down openButton"></i>
+                                        <i class="uk-icon-file-pdf-o dlButton"></i>
+                                        <i class="uk-icon-trash-o delButton"></i>
+                                        <span class='info'>Abteilung: <?=utf8_encode($result['department']);?> &sdot; Erstellt am <?= strftime('%d.%m.%Y %T', strtotime($result['create_time'])); ?></span>
+                                    </div>
+                                    <div class="profileCard profileCardAnswer" data-id="<?=$result['id']?>">
+                                        <div>
+                                            <h3>Ansprache Kandidat</h3>
+                                            <div><?=utf8_encode($result['answer']->address);?></div>
+                                        </div>
+                                        <div>
+                                            <h3>Kurzbezeichnung der Aufgabe</h3>
+                                            <div><?=utf8_encode($result['answer']->job);?></div>
+                                        </div>
+                                        <div>
+                                            <h3>Beschreibende Eigenschaften</h3>
+                                            <div><?=utf8_encode($result['answer']->properties);?></div>
+                                        </div>
+                                        <div>
+                                            <h3>Was frustriert und demotiviert den Kandidaten</h3>
+                                            <div><?=utf8_encode($result['answer']->demotivated);?></div>
+                                        </div>
+                                        <div>
+                                            <h3>Wird motiviert durch Worte und Darstellungen wie</h3>
+                                            <div><?=utf8_encode($result['answer']->positive);?></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+        intCurrCard         = 0;
+        arrCardData         = new Object();
+        intSessionKey       = null;
+        intSaveId           = null;
+        boolEnd             = false;
+    $('#nextButton').click(function(){
+
+        if(boolEnd)
+        {
+            createResult(intSessionKey);
+            return;
+        }
+
+        var mixValid       = cardValidation(intCurrCard);
+
+        if(intCurrCard == 0 && mixValid == true)
+        {
+            var arrTempCardData                 = $('#cardForm').serializeArray();
+
+            for (i in arrTempCardData)
+            {
+                var arrData                 = arrTempCardData[i];
+                arrCardData[arrData.name]   = arrData.value;
+            }
+
+            $('#card'+intCurrCard).hide();
+
+            if(!boolEnd)
+                intCurrCard++;
+
+            $('#cardForm .counterBox').show();
+            $('#abortButton').show();
+            createCard(intCurrCard);
+        }
+        else if(intCurrCard > 0 && mixValid == true)
+        {
+            var intSelect               = $('#card'+intCurrCard+' .selectBox.active').data().id;
+            $('#card'+intCurrCard).hide();
+
+            if(!boolEnd)
+                intCurrCard++;
+
+            createCard(intCurrCard, intSelect);
+            $('#counterProfile').html('Frage '+intCurrCard);
+        }
+        else
+        {
+            showError(mixValid);
+        }
+    });
+    $('#abortButton, #noSaveButton').click(function(){
+        if(intSessionKey != null)
+        {
+            var arrAjaxData     = {
+                type:           'POST',
+                url:            '<?= $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'ajaxKillSession')); ?>',
+                //dataType:       'json',
+                data:           {
+                    session:    intSessionKey
+                }
+            };
+            $.ajax(arrAjaxData).done(function(data) {
+                window.location.reload();
+            });
+        }
+        else
+        {
+            window.location.reload();
+        }
+    });
+    $('#saveButton').click(function(){
+        if(intSaveId == null)
+            return;
+
+        $.ajax({
+            type:        'POST',
+            url:         '<?= $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'ajaxSaveResult'));?>',
+            data:        {
+                saveId:  intSaveId
+            }
+        }).done(function(data) {
+            console.log(data);
+            if(data == 'ok')
+                window.location.reload();
+            else
+                alert('Ein unbekannter Fehler ist aufgetreten.');
+        });
+    });
+    // Saved Ergebnisse
+    $('#behaviorProfilesResults .header .openButton').click(function(){
+        var objButton     = this;
+        var objCardAnswer = $(this).parent().parent().children('.profileCardAnswer');
+        $(objCardAnswer).slideToggle(400, 'swing', function(){
+            if ($(objCardAnswer).css('display') == 'none') {
+                jQuery(objButton).removeClass('uk-icon-chevron-up');
+                jQuery(objButton).addClass('uk-icon-chevron-down');
+            }
+            else {
+                jQuery(objButton).removeClass('uk-icon-chevron-down');
+                jQuery(objButton).addClass('uk-icon-chevron-up');
+            }
+        });
+    });
+    $('#behaviorProfilesResults .header .delButton').click(function(){
+        var objButton     = this;
+        var objCardAnswer = $(this).parent().parent().children('.profileCardAnswer');
+        var objCard       = $(this).parent().parent();
+
+        $.ajax({
+            type:        'POST',
+            dataType:    'json',
+            url:         '<?= $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'ajaxDeleteResult'));?>',
+            data:        objCardAnswer.data()
+        }).done(function(data) {
+                if (data.status = 'ok') {
+                    objCard.slideUp();
+                }
+        });
+    });
+    $('#behaviorProfilesResults .header .dlButton').click(function(){
+        var objButton     = this;
+        var objCardAnswer = $(this).parent().parent().children('.profileCardAnswer');
+        $.fileDownload('<?= $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'ajaxDownloadResult'));?>?id='+objCardAnswer.data().id)
+         .fail(function (e) {
+             alert('Es ist ein Fehler beim generieren der PDF Datei aufgetreten, bitte versuchen Sie es erneut.\nError: '+e);
+         });
+    });
+});
+function cardValidation(id)
+{
+    var arrError    = new Array();
+    if(id == 0)
+    {
+        var arrTempForm     = $('#cardForm').serializeArray();
+        var arrForm         = new Array();
+        for (i in arrTempForm)
+        {
+            var arrData                 = arrTempForm[i];
+            arrForm[arrData.name]   = arrData.value;
+        }
+
+        for(key in arrForm)
+        {
+            var strValue   = arrForm[key];
+
+            if(key == 'postion')
+            {
+                if(strValue.length == 0)
+                    arrError.push('Es muss eine Position angegeben werden.');
+            }
+
+            if(key == 'department')
+            {
+                if(strValue.length == 0)
+                    arrError.push('Es muss eine Abteilung angegeben werden.');
+            }
+
+            if(key == 'country' || strValue == 0)
+            {
+                if(isNaN(strValue))
+                    arrError.push('Es muss bei der Standort angabe ein Land ausgewählt werden.');
+            }
+
+            if(key == 'zip')
+            {
+                if(isNaN(strValue) || strValue.length < 4 || strValue.length > 10)
+                    arrError.push('Die Postleizahl ist ungültig.');
+            }
+
+            if(key == 'location')
+            {
+                if(strValue.length == 0)
+                    arrError.push('Es muss bei der Standort angabe ein Ort angegeben werden.');
+            }
+
+            if(key == 'function')
+            {
+                if(isNaN(strValue) || strValue == 0)
+                    arrError.push('Es muss eine Funktion ausgewählt werden.');
+            }
+        }
+    }
+    else if (id > 0)
+    {
+        var boolSelectBoxCheck      = false;
+        $('#card'+id+' .selectBox').each(function(){
+            if($(this).hasClass('active'))
+                boolSelectBoxCheck  = true;
+        });
+        if(!boolSelectBoxCheck)
+            arrError.push('Bitte wählen Sie eins der Texte aus.');
+    }
+    else
+    {
+        return false;
+    }
+
+    return (arrError.length == 0 ? true : arrError);
+}
+function showError(mixError)
+{
+    if(mixError != false && mixError.length > 0)
+    {
+        var strErrorHTML    = '';
+        for(intI in mixError)
+        {
+            strErrorHTML    += mixError[intI]+'<br>';
+        }
+        $('#cardForm .uk-alert').html(strErrorHTML);
+    }
+    else
+    {
+        $('#cardForm .uk-alert').html('Ein unbekannter Fehler ist aufgetreten.');
+    }
+    $('#cardForm .uk-alert').slideDown(400, function(){
+        setTimeout(function(){
+            $('#cardForm .uk-alert').slideUp(400, function(){
+                $(this).html('');
+            })
+        }, 4000);
+    });
+}
+function createResult(intSession)
+{
+    var arrAjaxData     = {
+        type:           'POST',
+        url:            '<?= $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'ajaxGetResult')); ?>',
+        dataType:       'json',
+        data:           {
+            session:    intSession,
+            cardData:   arrCardData
+        }
+    };
+    $.ajax(arrAjaxData).done(function(arrData) {
+        console.log(arrData);
+        var arrAnswer   = arrData.answer;
+        intSessionKey   = null;
+        intSaveId       = arrData.saveId;
+        // Hide next Button
+        $("#nextButton").unbind("click");
+        $("#nextButton, #abortButton").hide();
+
+        // Show Button
+        $('#noSaveButton, #saveButton').show();
+
+        // Hide quest Box
+        $('#cardForm .cards .profileCard, #cardForm .counterBox').hide();
+
+        // Fill Answer Box
+        $('#cardForm #cardAnswer .result').html("Ergebnis: "+arrAnswer.identifier);
+        $('#cardForm #cardAnswer .addressBox').html(arrAnswer.address);
+        $('#cardForm #cardAnswer .jobBox').html(arrAnswer.job);
+        $('#cardForm #cardAnswer .propertiesBox').html(arrAnswer.properties);
+        $('#cardForm #cardAnswer .demotivatedBox').html(arrAnswer.demotivated);
+        $('#cardForm #cardAnswer .positiveBox').html(arrAnswer.positive);
+
+        // Show Answer Box
+        $('#cardForm #cardAnswer').show();
+
+    });
+}
+
+function createCard(intId, intSelect)
+{
+
+    var intLastCardId   = intId-1;
+    var arrAjaxData     = {
+        type:           'POST',
+        url:            '<?= $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'ajaxGetText')); ?>',
+        dataType:       'json',
+        data:           {
+            id:         intId,
+            function:   arrCardData['function']
+        }
+    };
+
+    if(intSelect)
+        arrAjaxData['data']['select']       = intSelect;
+
+    if(intSessionKey)
+        arrAjaxData['data']['session']      = intSessionKey;
+
+    $.ajax(arrAjaxData).done(function(arrData) {
+        intSessionKey       = arrData['session'];
+        var arrCards        = arrData['cards'];
+        var strCardHtml     = '';
+        console.log(arrData);
+        if(arrData.end == true)
+        {
+            boolEnd         = true;
+            createResult(arrData.session);
+        }
+        console.log(arrData);
+        for (i in arrCards)
+        {
+            i               = parseInt(i);
+            var arrObject   = arrCards[i];
+            var intDataId   = i+1;
+
+            strCardHtml     += "<div class='selectBox' data-id='"+intDataId+"' >"+arrObject.text+"</div>";
+        }
+
+        var objCard         = $(
+            "<div class='profileCard' id='card"+intId+"'>"+strCardHtml+"</div>"
+        ).insertAfter('#card'+intLastCardId);
+        objCard.css('display', 'inline-block');
+        //Beginn Größenfestsetzung
+		var intMaxHeight    = 0;
+        $('#card'+intId+' .selectBox').each(function(){
+            var intHeight   = $(this).height();
+            if(intHeight >= intMaxHeight)
+                intMaxHeight = intHeight;
+        });
+
+        $('#card'+intId+'').height(intMaxHeight+20);
+//Ende
+        $('#card'+intId+' .selectBox').click(function(){
+            $('#card'+intId+' .selectBox').each(function(){
+                $(this).removeClass('active');
+            });
+            $(this).addClass('active');
+        });
+
+
+
+    });
+}
+</script>

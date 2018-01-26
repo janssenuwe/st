@@ -1,0 +1,64 @@
+body {
+
+}
+.mce-i-print:before, .mce-i-fileTextO:before
+{
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+}
+.mce-i-print:before
+{
+    content: "\f02f";
+}
+
+.mce-i-fileTextO:before
+{
+    content: "\f0f6";
+}
+
+.mce-i-resize:before
+{
+    content: "\f02f";
+}
+
+.mce-tinymce {
+	margin: 10px 0 !important;
+}
+
+.mce-path-item
+{
+    display: none;
+}
+
+div.headline_format_text
+{
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    width: 50% !important;
+}
+.headlines
+{
+    clear: both;
+}
+
+.headline_format
+{
+    float: left !important;
+    width: 585px !important;
+    margin-bottom: 5px !important;
+}
+
+.headline_print
+{
+    float: left !important;
+    width: 200px !important;
+    text-align: right !important;
+    margin-bottom: 5px !important;
+}

@@ -1,0 +1,90 @@
+html {
+    font: normal 14px / 20px "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+    color: #262626;
+    height: 100%;
+    width: 100%;
+    cursor: text;
+}
+
+body, ul, li, p {
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;
+    font-size: 13px;
+}
+
+body p {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+span.floskeln 			                                    {background-color: #9ce3ff}
+span.negative_woerter 	                                    {background-color: #c7d66f}
+span.textverstaendnis 	                                    {background-color: #ffb979}
+span.anglizismen 		                                    {background-color: #ff8c87}
+span.nominalstil 		                                    {background-color: #8ffce6}
+span.aktiv_passiv 		                                    {background-color: #f8deca}
+span.wiederholungen 	                                    {background-color: #cfc0ff}
+span.wortlaenge 		                                    {background-color: #f1bdf2}
+span.lange_saetze 		                                    {background-color: #fffacc}
+
+/* HINTERGRÜNDE FÜR MULTIPLE MARKER
+=================================================================================================*/
+/* SPALTE 1 / DOPPEL-MARKER (INSGESAMT 6):	[FN, FT, FA] 	[NT, NA] 	[TA] */
+span.floskeln.negative_woerter 			                    {background-image: url(../img/bg_marker/sp1-2er/flo_neg.png) !important;}
+span.floskeln.textverstaendnis 			                    {background-image: url(../img/bg_marker/sp1-2er/flo_tex.png) !important;}
+span.floskeln.anglizismen 				                    {background-image: url(../img/bg_marker/sp1-2er/flo_ang.png) !important;}
+
+span.negative_woerter.textverstaendnis 	                    {background-image: url(../img/bg_marker/sp1-2er/neg_tex.png) !important;}
+span.negative_woerter.anglizismen	 	                    {background-image: url(../img/bg_marker/sp1-2er/neg_ang.png) !important;}
+
+span.textverstaendnis.anglizismen	 	                    {background-image: url(../img/bg_marker/sp1-2er/tex_ang.png) !important;}
+
+/* SPALTE 1 / DREIFACH-MARKER (INSGESAMT 4):	[FNT, FNA, FTA] 	[NTA] */
+span.floskeln.negative_woerter.textverstaendnis 	        {background-image: url(../img/bg_marker/sp1-3er/flo_neg_tex.png) !important;}
+span.floskeln.negative_woerter.anglizismen			        {background-image: url(../img/bg_marker/sp1-3er/flo_neg_ang.png) !important;}
+span.floskeln.textverstaendnis.anglizismen		 	        {background-image: url(../img/bg_marker/sp1-3er/flo_tex_ang.png) !important;}
+span.negative_woerter.textverstaendnis.anglizismen 	        {background-image: url(../img/bg_marker/sp1-3er/neg_tex_ang.png) !important;}
+
+/* SPALTE 1 / VIERFACH-MARKER (INSGESAMT 1):	[FNTA] */
+span.floskeln.negative_woerter.textverstaendnis.anglizismen {background-image: url(../img/bg_marker/sp1-4er/flo_neg_tex_ang.png) !important;}
+
+/* SPALTE 2 / DOPPEL-MARKER (INSGESAMT 1):	[FNTA] */
+span.nominalstil.aktiv_passiv                               {background-image: url(../img/bg_marker/sp2-2er/nom_akt.png) !important;}
+
+/* SPALTE 4 / DOPPEL-MARKER (INSGESAMT 1):	[FNTA] */
+span.wortlaenge.lange_saetze                                {background-image: url(../img/bg_marker/sp4-2er/wor_lan.png) !important;}
+
+.pdf .firstSite h2
+{
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 25px;
+}
+
+.pdf .firstSite h1, .pdf .firstSite h2, .pdf .firstSite h3, .pdf .firstSite h4, .pdf .firstSite h5, .pdf .firstSite h6
+{
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Verdana, sans-serif;
+    font-weight: normal;
+    color: #262626;
+    text-transform: none;
+}
+
+.pdf h3.accordion-title
+{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px 15px;
+    background: #dfe2e6;
+    font-size: 18px;
+    line-height: 24px;
+    cursor: pointer;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+.pdf a, .pdf:link
+{
+    color: #F00;
+    text-decoration: none;
+}

@@ -1,0 +1,262 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+
+                <div class="uk-width-3-4">
+                    <h1>
+                        <?php
+                            $strName = '';
+                            switch($function_name)
+                            {
+                                case 'whitelisthyphen':
+                                    $strName = 'Whitelist für Wörter mit Bindestrich/en';
+                                    break;
+                                case 'unknownabbreviations':
+                                    $strName = 'Unbekannte Abkürzungen';
+                                    break;
+                                default:
+                                    $strName = ucfirst(strtolower($function_name));
+                            }
+
+                            echo $strName;
+                        ?>
+                    </h1>
+
+                    <?php
+                        switch ($function_name)
+                        {
+                            case "abkuerzungen":
+                                echo "<p>Die Abkürzungen werden benutzt um z.B. im Textverständiniss nicht als unbekannte Wörter erkannt zu werden.</p>";
+                                break;
+
+                            case "wiederholungen":
+                                echo "<p>Die Wörter in dieser Liste werden nicht als wort das sich in einer Zeile wiederholt markiert, egal wie oft sie sich wiederholen.</p>";
+                                break;
+
+                            case "wiederholungen":
+                                echo "<p>Die Wörter in dieser Liste werden nicht als wort das sich in einer Zeile wiederholt markiert, egal wie oft sie sich wiederholen.</p>";
+                                break;
+
+                            case "grundwortschatz":
+                                echo "<p>Alle Wörter die in dieser Liste stehen, werden in der Funktion \"Textverständnis\" nicht markiert, da Sie als bekannte Wörter zählen.</p>";
+                                break;
+
+                            case "nominalstil":
+                                echo "<p>Markiert Wört die mit {heit, keit, ung, tum, keiten, ungen, heiten} enden und NICHT in dieser liste stehen Table stehen.</p>";
+                                break;
+
+                            case "anglizismen":
+                            case "floskeln":
+                            case "nominalstil":
+                            case "negativewoerter":
+                            case "passivverben":
+                                echo "<p>Alle Wörter die in dieser Liste stehen, werden in der Funktion \"".ucfirst(strtolower($function_name))."\" markiert, da Sie als ".ucfirst(strtolower($function_name))." zählen.</p>";
+                                break;
+
+                            case 'whitelisthyphen':
+                                echo "<p>Wörter mit Bindestrichen, die in dieser Liste enthalten sind, werden nicht getrennt verarbeitet.</p>";
+                                break;
+
+                            case 'unknownabbreviations':
+                                echo "<p>Die Unbekannten Abkürzungen werden in der Funktion Textverständiniss immer markiert.</p>";
+                                break;
+                        }
+
+                    ?>
+
+
+                    <div class='page_content'>
+                        <div class="uk-clearfix uk-margin-bottom">
+                            <div class="uk-float-right">
+                                <a class="uk-button uk-button-success" href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'createword', 'id' => $function_name))?>"><span class="glyphicon glyphicon-plus"></span> Neuen Begriff hinzufügen</a>
+                            </div>
+                        </div>
+                        <?php
+                            $form->prepare();
+                            $form->setAttribute('action', $this->url('homepage/default', array('controller' => 'admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.'1')));
+                            $form->setAttribute('method', 'get');
+                            echo $this->form()->openTag($form);
+                        ?>
+                        <table class="users_table table-striped table table-hover table_border">
+                            <tr>
+                                <th class="user_th">Begriff</th>
+                                <?php
+                                    if(!empty($rowset)){
+                                        if(array_key_exists('ersatz', get_object_vars($rowset[0]))){
+                                ?>
+                                <th class="user_th">Ersatzwort</th>
+                                <?php
+                                        }
+                                    }
+                                ?>
+                                <th class="user_th">zuletzt bearbeitet von</th>
+                                <th class="user_th"></th>
+                            </tr>
+                            <tr>
+
+                                <td class="user_th"><?php echo $this->formRow($form->get('wort_name')->setValue($get_array['wort_name']));?></td>
+                                <?php
+                                    if(!empty($rowset)) {
+                                        if( array_key_exists('ersatz', get_object_vars($rowset[0]))){
+                                ?>
+                                <td class="user_th"><?php echo @$this->formRow($form->get('wort_ersatz')->setValue($get_array['wort_ersatz']))?></td>
+                                <?php
+                                        }
+                                    }
+                                ?>
+                                <td class="user_th"><?php echo $this->formRow($form->get('wort_bearbeitet')->setValue($get_array['wort_bearbeitet']));?></td>
+                                <td class="user_th" style="text-align: center;"><?php echo $this->formRow($form->get('submit')); ?></td>
+
+                            </tr>
+                            <?php
+                                foreach ($rowset as $row) {
+                            ?>
+                            <tr>
+                                <td class="user_th"><?php echo utf8_encode($row['name']);?></td>
+                                <?php
+                                    if(array_key_exists('ersatz', $row)){
+                                ?>
+                                <td class="user_th"><?php  echo utf8_encode($row['ersatz']) ?></td>
+                                <?php
+                                    }
+                                ?>
+                                <td class="user_th"><?php echo $row['zuletzt_bearbeitet_von'] ?></td>
+
+                                <td class="user_th" style="text-align: center;">
+                                    <a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'updateword', 'id' => $row['id'].'_'.$function_name))?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a class="wordDelete" title="Wort löschen" href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'updateword', 'id' => $row['id'].'_'.$function_name.'_delete'))?>" onclick="return confirm('Wollen Sie diesen Wort wirklich löschen?')">
+                                        <i style="position: relative; top: -0.5px; font-size: 18px;" class="glyphicon uk-icon-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                                }
+                            ?>
+                        </table>
+                        <?php
+                            echo $this->form()->closeTag();
+
+                        ?>
+
+                        <ul class="pagination">
+                            <?php
+                                if( $index > 1 ){
+                            ?>
+                            <li>
+                                <?php
+                                    if(isset($_GET['wort_ersatz'])){
+                                ?>
+                                    <a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.((int)$index-1)));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_ersatz=<?php echo str_replace(' ', '+', $get_array['wort_ersatz']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>">&laquo;</a>
+                                <?php
+                                    } else {
+                                ?>
+                                     <a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.((int)$index-1)));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>">&laquo;</a>
+                                <?php
+                                    }
+                                ?>
+                            </li>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if( $index > 0 && $index < 3) {
+                                    for($i = 1; $i <= $index+4; $i++){
+                                        if($i <= $max && $i < 6){
+                                            ?>
+                                            <li>
+                                                <?php
+                                                    if(isset($_GET['wort_ersatz'])){
+                                                ?>
+                                                    <a style="<?=($index == $i ? 'background-color: #CCC; font-weight: bold;' : '');?>" href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.$i));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_ersatz=<?php echo str_replace(' ', '+', $get_array['wort_ersatz']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>"><?php echo $i?></a>
+                                                <?php
+                                                    } else {
+                                                ?>
+                                                    <a style="<?=($index == $i ? 'background-color: #CCC; font-weight: bold;' : '');?>" href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.$i));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>"><?php echo $i?></a>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                }
+                            ?>
+                            <?php
+                                if( $index >= 3 ) {
+                                    for( $i = $index-2; $i <= $index+2; $i++) {
+
+                                        if($i <= $max){
+                                            ?>
+                                            <li>
+                                                <?php
+                                                    if(isset($_GET['wort_ersatz'])){
+                                                ?>
+                                                    <a style="<?=($index == $i ? 'background-color: #CCC; font-weight: bold;' : '');?>" href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.$i));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_ersatz=<?php echo str_replace(' ', '+', $get_array['wort_ersatz']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>"><?php echo $i?></a>
+                                                <?php
+                                                    } else {
+                                                ?>
+                                                    <a style="<?=($index == $i ? 'background-color: #CCC; font-weight: bold;' : '');?>" href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.$i));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>"><?php echo $i?></a>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                            ?>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if( (int)$index < $max ){
+                            ?>
+                            <li>
+                                <?php
+                                    if(isset($_GET['wort_ersatz'])){
+                                ?>
+                                    <a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.((int)$index+1)));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_ersatz=<?php echo str_replace(' ', '+', $get_array['wort_ersatz']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>">&raquo;</a>
+                               <?php
+                                    } else {
+                               ?>
+                                     <a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => $function_name.'_'.((int)$index+1)));?>?wort_name=<?php echo str_replace(' ', '+', $get_array['wort_name']);?>&wort_bearbeitet=<?php echo $get_array['wort_bearbeitet'];?>">&raquo;</a>
+                               <?php
+                                   }
+                               ?>
+                            </li>
+                            <?php
+                                }
+                            ?>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.wordDelete').click(function(e){
+        var strHref     = this.href;
+        var objParent   = $(this).parent().parent();
+        e.preventDefault();
+
+        $.ajax({
+            'url':          strHref,
+            'contentType':  'application/json'
+        }).done(function(msg){
+            if(msg.status == "ok")
+            {
+                objParent.remove();
+            }
+            else{
+                alert("Unbekannter Fehler!")
+            }
+        });
+    });
+</script>

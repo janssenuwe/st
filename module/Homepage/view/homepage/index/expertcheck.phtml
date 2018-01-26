@@ -1,0 +1,68 @@
+<?php include_once('public/includes/user/header.php'); ?>
+
+	<div class="uk-container uk-container-center">
+		<div class="uk-clearfix">
+			<div class="sidebar">
+                <?php include_once('public/includes/user/sidebar.php'); ?>
+			</div>
+			
+			<div class="inhalt">
+                <?php if(!$boolUsed): ?>
+				<h1><i class="uk-icon-medkit"></i> Experten-Check</h1>
+				
+				<p>Schon kleine Mängel Ihrer Stellenanzeige wirken sich gravierend auf den Erfolg aus.</p>
+				<p>Von unseren Experten erfahren Sie, wo die Schwächen und die Potenziale Ihrer Stellenanzeige liegen.<br />Sie erhalten eine Auswertung in Bezug auf den Aufbau, den Inhalt und die Wirkung Ihrer Stellenanzeige. Und natürlich sofort umsetzbare Empfehlungen.</p>
+				<p><strong>Wir schenken Ihnen einen individuellen Experten-Check für eine Ihre Stellenanzeige.<br />Laden Sie hierfür einfach Ihre Stellenanzeige hoch.</strong></p>
+
+                    <?php
+                    if(count($arrError) > 0)
+                        foreach($arrError as $strError)
+                            echo "<div class='uk-alert uk-alert-warning'>$strError</div>";
+                    ?>
+
+
+
+                    <form action="<?php echo $this->url('homepage/default', array('controller' => 'Index', 'action' => 'expertcheck'));?>" method="post" enctype="multipart/form-data">
+						
+						<div class="uk-placeholder uk-clearfix">
+							<h3>Stellenanzeige auswählen und hochladen <i class="uk-icon-upload"></i></h3>
+							<input type="file" name="file" accept="application/pdf,image/jpeg,image/x-png" <?=($boolUsed ? 'disabled' : '');?> />
+							<div class="uk-margin-small-top"><small><i class="uk-icon-info-circle"></i> Mögliche Dateiformate: PDF, JPEG oder PNG bis 10 MB</small></div>
+						</div>
+						<input class="uk-button-large gruen" type="submit" value="Kostenlosen Experten-Check jetzt anfordern" <?=($boolUsed ? 'disabled' : '');?> />
+					</form>
+					
+					<br />
+			</div>
+            <?php elseif($boolFinish): ?>
+			<h1><i class="uk-icon-medkit"></i> Experten-Check</h1>
+                <h2>Ihre Stellenanzeige liegt nun dem Experten-Team vor</h2>
+				<p>Vielen Dank für die Einsendung Ihrer Stellenanezige. Unser Experten-Team wird diese nun detailliert analysieren. Nach der abgeschlossenen Prüfung werden wir uns mit einem ausführlichen Report bei Ihnen melden.</p>
+				<br /><br /><br /><br /><br /><br /><br /><br />
+            <?php else: ?>
+			<h1><i class="uk-icon-medkit"></i> Experten-Check</h1>
+            <div class='uk-alert uk-alert-warning'>
+				Sie haben den kostenlosen Experten-Check bereits genutzt.<br />
+				<a id="downloadExpertCheck" class="uk-button uk-button-small">Geprüfte Stellenanzeige herunterladen</a>
+			</div>
+			<p><strong>Nehmen Sie für weitere Experten-Checks mit uns <a href="/check/public/homepage/Index/contact">Kontakt</a> auf.</strong></p>
+               <br /><br /><br />
+            <?php endif; ?>
+		</div>
+	</div>	
+
+<script>
+    $(document).ready(function(){
+        $('#downloadExpertCheck').click(function(){
+            $.fileDownload('<?php echo $this->url('homepage/default', array('controller' => 'Index', 'action' => 'expertcheckaction'));?>?id=<?=$intFileId?>', {})
+             .fail(function (e) {
+                 alert('Es ist ein Fehler beim generieren der PDF Datei aufgetreten, bitte versuchen Sie es erneut.\nError: '+e);
+             });
+        });
+        $('input[name="file"]').change(function(){
+            var objFile          = this.files[0];
+            if(objFile && objFile.size > 10485760)
+                alert('Die Ausgewählte Datei ist über 10 MB groß !');
+        });
+    });
+</script>

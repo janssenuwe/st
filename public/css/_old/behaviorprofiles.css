@@ -1,0 +1,186 @@
+#behaviorProfiles{
+    padding: 15px 15px 15px 15px;
+}
+
+#behaviorProfiles .profileCard{
+    margin-bottom: 10px;
+    display: none;
+}
+
+#behaviorProfiles .profileCard .errorShadow{
+    box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.4);
+}
+
+#behaviorProfiles .counterBox{
+    display: none;
+}
+
+#behaviorProfiles .cards{
+	display: inline-block;
+}
+
+#behaviorProfiles .profileCard .selectBox{
+    cursor: pointer;
+    width: 396px;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    transition: background-color .5s;
+}
+
+#behaviorProfiles .profileCard .selectBox:hover{
+    background-color: #EFF3FF;
+    border: 1px solid rgba(0, 0, 0, 0.30);
+}
+
+#behaviorProfiles .profileCard .selectBox.active{
+    background-color: #DFFFDF;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+#behaviorProfiles .profileCard .selectBox.fristbox{
+    float: left;
+}
+
+#behaviorProfiles .profileCard .selectBox.lastbox{
+    margin-left: 5px;
+    display: inline-block;
+}
+
+#behaviorProfiles .profileCard select[name="country"]{
+    width: 200px;
+}
+
+#behaviorProfiles .profileCard input[name="zip"]{
+    width: 100px;
+}
+
+#behaviorProfiles .profileCard input[name="location"]{
+    width: 488px;
+}
+
+#behaviorProfiles .button {
+    float: right;
+}
+
+#behaviorProfiles .button > a{
+    display: none;
+}
+
+#behaviorProfiles .button a#nextButton{
+    display: inline-block;
+}
+
+#behaviorProfiles .uk-pagination li a{
+    padding: 1px 10px;
+}
+
+#behaviorProfiles .uk-alert{
+    display: none;
+}
+
+.profileCardAnswer > div {
+    margin-top: 10px;  
+}
+
+.profileCardAnswer > div > div {
+    padding: 10px;  
+    margin-top: -20px;  
+    width: 800px;
+    margin-left: -2px;
+    border-radius: 5px;  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.profileCardAnswer > div > textarea {
+    padding: 10px;
+    margin-top: -20px;
+    width: 765px;
+    min-width: 765px;
+    max-width: 765px;
+    margin-left: -2px;
+    border-radius: 5px;  border: 1px solid rgba(0, 0, 0, 0.15);
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.profileCardAnswer > div > .textareaButtons {
+    float: right;
+    position: relative;
+    top: -15px;
+    left: -8px;
+    width: auto !important;
+    border: 0;
+    font-size: 18px;
+}
+
+.profileCardAnswer > div > .textareaButtons i{
+    cursor: pointer;
+}
+
+#behaviorProfilesResults {
+	margin-top: 20px;
+}
+
+#behaviorProfilesResults .header {
+	margin-top: 10px;
+}
+
+#behaviorProfilesResults .header h3{
+    line-height: 5px;
+    display: inline-block;
+}
+
+#behaviorProfilesResults .header .info{
+    color: #B2B2B2;
+    font-size: 10px;
+    margin-top: -10px;
+    display: block;
+}
+
+#behaviorProfilesResults .header .openButton{
+	cursor: pointer;
+    float: right;
+    margin-right: 5px;
+}
+
+#behaviorProfilesResults .header .delButton{
+    cursor: pointer;
+    float: right;
+    margin-right: 5px;
+}
+
+#behaviorProfilesResults .header .dlButton{
+    cursor: pointer;
+    float: right;
+    margin-right: 5px;
+}
+
+
+#behaviorProfilesResults ul{
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+#behaviorProfilesResults ul li:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+#behaviorProfilesResults ul li:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+#behaviorProfilesResults .profileCardAnswer {
+	padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgba(204, 204, 204, 0.1);
+    border: 1px solid #dddddd;
+    margin-bottom: 5px;
+    display: none;
+}
+
+#behaviorProfilesResults .profileCardAnswer > div > div {
+    width: 765px;
+}

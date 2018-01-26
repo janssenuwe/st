@@ -1,0 +1,67 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+                <div class="uk-width-3-4">
+                    <h1><?php echo $function_name?></h1>
+
+                    <div class='page_content'>
+                        <?php
+
+                            if(isset($arrError))
+                            {
+                                echo '<div class="uk-alert uk-alert-danger">';
+                                foreach ($arrError as $strError)
+                                    echo "$strError<br/>";
+                                echo '</div>';
+                            }
+
+                            foreach($rowset as $row){
+                                $form->prepare();
+                                $form->setAttribute('action', $this->url('homepage/default', array('controller' => 'admin', 'action' => 'updateword', 'id' => $row['id'].'_'.$function_name)));
+                                $form->setAttribute('method', 'post');
+                                echo $this->form()->openTag($form);
+                        ?>
+                        <table class="users_table table-striped table table-hover table_border">
+                            <tr>
+                                <th class="user_th">Name</th>
+                                <?php
+                                    if($ersatz_exist === true){
+                                ?>
+                                <th class="user_th">Ersatzwort</th>
+                                <?php
+                                    }
+                                ?>
+                                <th class="user_th"></th>
+                                <th class="user_th"></th>
+                            </tr>
+
+                            <tr>
+                                <td class="user_th"><?php echo $this->formRow($form->get('name')->setValue(utf8_encode($row->name))); ?></td>
+                                <?php
+                                    if(array_key_exists('ersatz', $row)){
+                                ?>
+                                <td class="user_th"><?php echo $this->formRow($form->get('ersatz')->setValue(utf8_encode($row->ersatz))); ?></td>
+                                <?php
+                                    }
+                                ?>
+                                <td class="user_th"><?php echo $this->formSubmit($form->get('update_submit')); ?></td>
+                                <td class="user_th" ><?php echo $this->formSubmit($form->get('delete_submit')); ?></td>
+                            </tr>
+                        </table>
+                        <?php
+                                echo $this->form()->closeTag();
+                            }
+                        ?>
+                        </br>
+                        <a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable'))."/$function_name";?>_1?wort_name=&wort_ersatz=&wort_bearbeitet=" class="uk-button">< Zurück</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

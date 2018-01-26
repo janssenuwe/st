@@ -1,0 +1,49 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+    <div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+
+
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+
+                <div class="uk-width-3-4">
+                    <h1>Willkommen <?php if($this->identity()){?> <?= $user->user_vorname." ".$user->user_nachname; ?><?php }?>,</h1>
+                    <p>Sie möchten Stellenanzeigen und Stellenausschreibungen, mit der Sie die passenden Bewerber geradezu magnetisch
+					anziehen? Die Werkzeuge in der TOOLBOX helfen Ihnen dabei. </p>
+					<br />
+                    <table class="uk-table uk-table-striped">
+                        <thead>
+                        <tr>
+                            <th>Betreff</th>
+                            <th>Autor</th>
+                            <th>E-Mail</th>
+                            <th>Vom</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($arrContacts as $arrRow): ?>
+                            <tr>
+                                <td><?=$arrRow->affected;?></td>
+                                <td><?=$arrRow->user_vorname.' '.$arrRow->user_nachname;?></td>
+                                <td><a href="mailto:<?=$arrRow->user_email;?>"><?=$arrRow->user_email;?></a></td>
+                                <td><?=$arrRow->create_at;?></td>
+                                <td><a href="<?=$this->url('homepage/default', array('controller' => 'Admin', 'action' => 'contactaction', 'id' => 0));?>?action=rm&id=<?=$arrRow->id;?>">Löschen</a></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"><?=str_replace('\r\n', '<br>', $arrRow->text);?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

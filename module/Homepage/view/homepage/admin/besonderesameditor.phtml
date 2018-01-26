@@ -1,0 +1,30 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<div class="acp">
+    <div class="ueberschrift_nav">
+        <h1>Der etwas andere Editor</h1>
+    </div>
+    <div class="navbar_user">
+        <div class='nav_bar_div'>
+            <?php include_once('public/includes/sidebar.php'); ?>
+        </div>
+        <div class='page_content'>
+            <div class='besonderes_beschreibung'>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            </div>
+            <div>
+                Pfeil1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Pfeil2 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;    Pfeil3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    Pfeil4
+            </div>
+            <div id='textarea_1' class="editor_container">
+                <textarea class="textarea_1" name="content" cols="50" rows="15">
+                </textarea>
+            </div>
+       </div>
+    </div>
+    <div class="logout_div">
+        Angemeldet als: <?php echo $this->identity(); ?>
+        <a href=" <?php echo $this->url('auth/default', array('controller' => 'index', 'action' => 'logout'));?>">  <?php echo $this->translate('Logout'); ?></a>
+    </div>
+    <script type="text/javascript">
+        createEditor('textarea_1');
+    </script>
+</div>

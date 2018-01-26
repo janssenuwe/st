@@ -1,0 +1,308 @@
+<?php
+echo $this->doctype();
+include_once("public/includes/Utils.php");
+?>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <?php echo $this->headTitle('Stellenanzeigen texten')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/index.css') ?>
+		<link rel="stylesheet" href="/templates/yoo_master2/styles/toolbox/css/theme.css">
+		<link rel="stylesheet" href="/templates/yoo_master2/styles/toolbox/css/custom.css">
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/CreateNewButtons.js')
+            ->prependFile($this->basePath() . '/js/added_functions.js')
+            ->prependFile($this->basePath() . '/tinymce_4.0.11/tinymce/js/tinymce/tinymce.min.js')
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+		<script src="/templates/yoo_master2/warp/vendor/uikit/js/uikit.js"></script>
+
+    </head>
+    <body class="iframe-registrierung">
+<div id="inhalt">
+	<div class="uk-container uk-container-center">
+  <div class="tm-headerbar uk-clearfix uk-hidden-small">
+    <a class="tm-logo" href="http://www.stellenanzeigen-texten.de">
+    <div><img src="/images/allgemein/logo-toolbox-stellenanzeigen.png" alt=
+    "TOOLBOX für Stellenanzeigen"></div></a>
+
+    <div class="uk-panel _menu">
+      <ul class="uk-navbar-nav">
+        <li class="">
+          <a href="/">Start</a>
+        </li>
+
+        <li>
+          <a href="/funktionen/erfolgreiche-stellenanzeigen">Funktionen</a>
+        </li>
+
+        <li>
+          <a href="/seminare/stellenanzeigen-weiterbildung">Seminare</a>
+        </li>
+
+        <li>
+          <a href="/premium-services/erfolgreiches-recruiting">Premium-Services</a>
+        </li>
+
+        <li>
+          <a href="/blog/">Blog</a>
+        </li>
+
+        <li>
+          <a href="/sonstiges/kontakt-stellenanzeigen">Kontakt</a>
+        </li>
+		
+		<li class="uk-active registrieren">
+          <a href="/check/public/auth/registration/index">Registrierung</a>
+        </li>
+      </ul>
+    </div>
+  </div><!-- BEGINN | Container Logo (klein) + Offcanvas-Menü -->
+
+  <div class="uk-grid uk-visible-small">
+    <div class="uk-width-2-3">
+      <a class="tm-logo-small" href="http://www.stellenanzeigen-texten.de">
+      <div><img src="/images/allgemein/logo-toolbox-stellenanzeigen.png" alt=
+      "logo toolbox stellenanzeigen"></div></a>
+    </div>
+
+    <div class="uk-width-1-3">
+      <a href="#offcanvas" class="uk-navbar-toggle" data-uk-offcanvas=""></a>
+    </div>
+  </div><!-- ENDE | Container Logo (klein) + Offcanvas-Menü -->
+</div>
+	
+		<div class="buehne">
+			<section class="tm-top-a uk-grid" data-uk-grid-match="{target:'> div > .uk-panel'}" data-uk-grid-margin="">
+				<div class="uk-width-1-1"><div class="uk-panel">
+				<div class="uk-cover-background buehne-vollbild" style="background-image: url('/images/buehne/registrierung.png'); height: 100px; background-position: 50% 50%;">&nbsp;</div></div></div>
+			</section>
+		</div>
+	<div class="uk-container uk-container-center">
+		<div class="tm-middle uk-grid" data-uk-grid-match="" data-uk-grid-margin="">
+			<div class="tm-main uk-width-medium-3-4 uk-push-1-4">
+				<main class="tm-content">
+					<article class="uk-article">
+					
+					<h1>Registrierung</h1>					
+					<p>Registrieren Sie sich jetzt kostenlos für die TOOLBOX für Stellenanzeigen.<br />
+					Der Registrierungsprozess besteht aus 3 einfachen Schritten:</p>
+					<ul class="uk-list uk-list-space">
+						<li><strong>Schritt 1:</strong> Registrierungsformular ausfüllen</li>
+						<li><strong>Schritt 2:</strong> E-Mail-Adresse bestätigen</li>
+						<li><strong>Schritt 3:</strong> Account wird durch das Team der TOOLBOX freigeschaltet</li>
+					</ul>
+					<h2 class="uk-margin-small-bottom">Account erstellen</h2>
+                <?php
+                    $form = $this->form;
+                    $form->prepare();
+                    ?>
+                <form action="<?=$this->url('auth/default', array('controller' => 'registration', 'action' => 'index'));?>" method="post" name="registration" class="uk-form" style="width: 70%;">
+                    <?php
+                    $arrCombinedError   = array();
+                    $arrNormalError     = array();
+
+                    foreach ($form as $element)
+                    {
+                        $strError       = trim($this->formElementErrors()
+                                                    ->setMessageOpenFormat('')
+                                                    ->setMessageSeparatorString('')
+                                                    ->setMessageCloseString('')
+                                                    ->render($element));
+
+                        if(!empty($strError))
+                        {
+                            if(startsWith($strError, '!'))
+                            {
+                                $strError               = substr($strError, 1);
+                                $arrCombinedError[]     = $strError;
+                            }
+                            else
+                            {
+                                $arrNormalError[]       = $strError;
+                            }
+                        }
+                    }
+                    ?>
+
+                    <?php if(count($arrCombinedError) > 0):?>
+                        <div class="uk-alert uk-alert-danger">
+                            Bitte vervollständigen Sie die folgenden Angaben:<br />
+                        
+
+                        <!-- Mit Komma getrennte Fehler -->
+                        <b>
+                            <?php
+                            if(count($arrCombinedError) > 1)
+                            {
+                                $strLastError = array_pop($arrCombinedError);
+                                echo implode(', ', $arrCombinedError)." und $strLastError";
+                            }
+                            else if(count($arrCombinedError) > 0)
+                            {
+                                echo $arrCombinedError[0];
+                            }
+                            ?>
+                        </b></div>
+                    <?php endif; ?>
+                    
+                    <!-- Sonstige Fehler -->
+                    <?php if(count($arrNormalError) > 0): ?>
+                        <div class="uk-alert uk-alert-danger">
+                            <b>
+                                <?php
+                                foreach($arrNormalError as $strError)
+                                    echo "$strError</br>";
+                                ?>
+                            </b>
+                        </div>
+                    <?php endif; ?>
+
+
+                            
+				<div class="uk-grid uk-margin-small-top">
+					<div class="uk-width-medium-1-2 uk-width-small-1-1">
+						<small>Firma/Organisation</small>
+						<?php echo $this->formRow($form->get('user_firmenname'), 'append', false); ?>
+					</div>
+					<div class="uk-width-medium-1-2">&nbsp;</div>
+				</div>
+
+				<div class="uk-grid uk-margin-small-top">
+					<div class="uk-width-medium-1-2">
+						<small>Anrede</small>
+						<?php echo $this->formRow($form->get('user_anrede'), 'append', false); ?>
+					</div>				
+					<div class="uk-width-medium-1-2">
+						<small>Titel</small>
+						<?php echo $this->formRow($form->get('user_titel'), 'append', false); ?>
+					</div>
+				</div>
+			
+				<div class="uk-grid uk-margin-small-top">
+					<div class="uk-width-medium-1-2 uk-width-small-1-1">
+						<small>Vorname</small>
+						<?php echo $this->formRow($form->get('user_vorname'), 'append', false); ?>
+					</div>
+					<div class="uk-width-medium-1-2 uk-width-small-1-1">
+						<small>Nachname</small>
+						<?php echo $this->formRow($form->get('user_nachname'), 'append', false); ?>
+					</div>			
+				</div>
+				
+				<div class="uk-grid uk-margin-small-top">
+					<div class="uk-width-medium-1-2 uk-width-small-1-1">
+						<small>E-Mail-Adresse</small>
+						<?php echo $this->formRow($form->get('user_email'), 'append', false); ?>
+					</div>
+					<div class="uk-width-medium-1-2 uk-width-small-1-1">
+						<small>Passwort</small>
+						<?php echo $this->formRow($form->get('user_passwort'), 'append', false); ?>
+					</div>		
+				</div>
+
+				<div class=" uk-width-medium-1-1 uk-width-small-1-1 uk-margin-top">
+					<input type="submit" name="user_submit" value="Jetzt kostenlos registrieren" style="font-weight: bold;" class="uk-width-1-1 uk-button uk-button-large registrieren">
+				</div>
+				<br /><br /><br /><br /><br /><br /><br />
+
+
+	</div>
+	
+	</form>
+	
+					
+					
+						
+					</article>
+				</main>
+			</div>
+		</div>
+</div>
+<div class="footer">
+		<footer class="tm-footer">
+		<div class="uk-container uk-container-center">
+			
+			<div class="uk-panel">
+	<div class="uk-grid" data-uk-grid-margin="">
+	<div class="uk-width-medium-1-3">
+		<div class="uk-panel uk-panel-header">
+			<h3 class="uk-panel-title">Empfehlen Sie uns weiter</h3>
+			<!-- Go to www.addthis.com/dashboard to customize your tools -->
+			<div class="addthis_sharing_toolbox" data-url="http://www.stellenanzeigen-texten.de/" data-title="Stellenanzeigen texten und optimieren"><div id="atstbx" class="at-share-tbx-element addthis_32x32_style addthis-smartlayers addthis-animated at4-show"><a class="at-share-btn at-svc-twitter"><span class="at4-icon aticon-twitter" title="Twitter"></span></a><a class="at-share-btn at-svc-facebook"><span class="at4-icon aticon-facebook" title="Facebook"></span></a><a class="at-share-btn at-svc-xing"><span class="at4-icon aticon-xing" title="XING"></span></a><a class="at-share-btn at-svc-google_plusone_share"><span class="at4-icon aticon-google_plusone_share" title="Google+"></span></a><a class="at-share-btn at-svc-linkedin"><span class="at4-icon aticon-linkedin" title="LinkedIn"></span></a><a class="at-share-btn at-svc-email"><span class="at4-icon aticon-email" title="E-Mail"></span></a><a class="at-share-btn at-svc-compact"><span class="at4-icon aticon-compact" title="Mehr..."></span></a></div></div>
+			<!-- Go to www.addthis.com/dashboard to customize your tools -->
+			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-520cb2c33c80ea1d"></script>
+		</div>
+	</div>
+	<div class="uk-width-medium-1-3">&nbsp;</div>
+	<div class="uk-width-medium-1-3">
+		<div class="uk-panel uk-panel-header">
+			<h3 class="uk-panel-title">Weitere Links</h3>
+			<ul class="uk-subnav uk-subnav-pill uk-flex uk-flex-center">
+				<li class="uk-active"><a href="/sonstiges/kontakt-stellenanzeigen">Kontakt</a>
+				</li>
+				<li class="uk-active"><a href="/sonstiges/datenschutz">Datenschutz</a>
+				</li>
+				<li class="uk-active"><a href="/sonstiges/agb">AGB</a>
+				</li>
+				<li class="uk-active"><a href="/sonstiges/impressum">Impressum</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<p>© Copyright 2014, Alle Rechte vorbehalten aicovo® gmbh</p></div>		</div>
+		</footer>
+		
+		
+	</div>
+	
+	 <div id="offcanvas" class="uk-offcanvas">
+      <div class="uk-offcanvas-bar">
+        <ul class="uk-nav uk-nav-offcanvas">
+          <li class="">
+            <a href="/">Start</a>
+          </li>
+          <li class="uk-parent">
+            <a href="/funktionen/erfolgreiche-stellenanzeigen">Funktionen</a>
+
+          </li>
+          <li class="uk-parent">
+            <a href="/seminare/stellenanzeigen-weiterbildung">Seminare</a>
+
+          </li>
+          <li class="uk-parent">
+            <a href="/premium-services/erfolgreiches-recruiting">Premium-Services</a>
+
+          </li>
+          <li>
+            <a href="/blog/">Blog</a>
+          </li>
+          <li class="uk-parent">
+            <a href="/sonstiges/kontakt-stellenanzeigen">Kontakt</a>
+
+          </li>
+		  <li class="uk-parent uk-active">
+            <a href="/sonstiges/kontakt-stellenanzeigen">Registrieren</a>
+
+          </li>
+        </ul>
+      </div>
+    </div>
+    </body>
+</html>

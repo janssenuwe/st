@@ -1,0 +1,81 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+    <div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+
+
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+
+                <div class="uk-width-3-4">
+                    <h1>Willkommen <?php if($this->identity()){?> <?= utf8_encode($user->user_vorname)." ".utf8_encode($user->user_nachname); ?><?php }?>,</h1>
+                    <p>Sie möchten Stellenanzeigen und Stellenausschreibungen, mit der Sie die passenden Bewerber geradezu magnetisch
+					anziehen? Die Werkzeuge in der TOOLBOX helfen Ihnen dabei. </p>
+					<br />
+                    <h2>Aktuell</h2>
+                    <table class="uk-table uk-table-striped">
+                        <thead>
+                        <tr>
+                            <th>Autor</th>
+                            <th>E-Mail</th>
+                            <th>Vom</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if(count($arrExpertChecks) > 0): ?>
+                            <?php foreach($arrExpertChecks as $arrRow): ?>
+                                <tr>
+                                    <td><?=utf8_encode($arrRow->user_vorname).' '.utf8_encode($arrRow->user_nachname);?></td>
+                                    <td><a href="mailto:<?=$arrRow->user_email;?>?subject=Stellenanzeigen-Texten Experten Check"><?=$arrRow->user_email;?></a></td>
+                                    <td><?=date('d.m.y  H:i:s', strtotime($arrRow->create_at));?></td>
+                                    <td>
+                                        <a href="<?=$this->url('homepage/default', array('controller' => 'Admin', 'action' => 'expertcheckaction'));?>?action=dl&id=<?=$arrRow->id;?>">Download</a>
+                                        |
+                                        <a href="<?=$this->url('homepage/default', array('controller' => 'Admin', 'action' => 'expertcheckaction'));?>?action=ar&id=<?=$arrRow->id;?>" onclick="return confirm('Möchten Sie wirklich die Anfrage archivieren ?');">Archivieren</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <td colspan="4">Derzeit sind keine Experten-Check Anfragen vorhanden.</td>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                    <br />
+                    <h2>Archiv</h2>
+                    <table class="uk-table uk-table-striped">
+                        <thead>
+                        <tr>
+                            <th>Autor</th>
+                            <th>E-Mail</th>
+                            <th>Vom</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php if(count($arrExpertChecksAR) > 0): ?>
+                        <?php foreach($arrExpertChecksAR as $arrRow): ?>
+                            <tr>
+                                <td><?=$arrRow->user_vorname.' '.$arrRow->user_nachname;?></td>
+                                <td><a href="mailto:<?=$arrRow->user_email;?>?subject=Stellenanzeigen-Texten Experten Check"><?=$arrRow->user_email;?></a></td>
+                                <td><?=date('d.m.y  H:i:s', strtotime($arrRow->create_at));?></td>
+                                <td>
+                                    <a href="<?=$this->url('homepage/default', array('controller' => 'Admin', 'action' => 'expertcheckaction'));?>?action=dl&id=<?=$arrRow->id;?>">Download</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                            <td colspan="4">Derzeit sind keine Experten-Check Anfragen archiviert.</td>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

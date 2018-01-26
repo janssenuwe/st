@@ -1,0 +1,218 @@
+html
+{
+    font: normal 12px Arial;
+    color: #262626;
+    height: 100%;
+    width: 100%;
+    cursor: text;
+}
+
+body, ul, li, p
+{
+    font: normal 13px Arial;
+    color: #262626;
+}
+
+body p
+{
+    margin: 0;
+    padding: 0;
+}
+
+span.floskeln
+{
+    background-color: #9CE3FF
+}
+
+span.negative_woerter
+{
+    background-color: #C7D66F
+}
+
+span.textverstaendnis
+{
+    background-color: #FFB979
+}
+
+span.anglizismen
+{
+    background-color: #FF8C87
+}
+
+span.nominalstil
+{
+    background-color: #8FFCE6
+}
+
+span.aktiv_passiv
+{
+    background-color: #eed4c0
+}
+
+span.wiederholungen
+{
+    background-color: #CFC0FF
+}
+
+span.wortlaenge
+{
+    background-color: #F1BDF2
+}
+
+span.lange_saetze
+{
+    background-color: #FFF59B
+}
+
+/* HINTERGRÜNDE FÜR MULTIPLE MARKER
+=================================================================================================*/
+/* SPALTE 1 / DOPPEL-MARKER (INSGESAMT 6):	[FN, FT, FA] 	[NT, NA] 	[TA] */
+span.floskeln.negative_woerter
+{
+    background-image: url(../img/bg_marker/sp1-2er/flo_neg.png) !important;
+}
+
+span.floskeln.textverstaendnis
+{
+    background-image: url(../img/bg_marker/sp1-2er/flo_tex.png) !important;
+}
+
+span.floskeln.anglizismen
+{
+    background-image: url(../img/bg_marker/sp1-2er/flo_ang.png) !important;
+}
+
+span.negative_woerter.textverstaendnis
+{
+    background-image: url(../img/bg_marker/sp1-2er/neg_tex.png) !important;
+}
+
+span.negative_woerter.anglizismen
+{
+    background-image: url(../img/bg_marker/sp1-2er/neg_ang.png) !important;
+}
+
+span.textverstaendnis.anglizismen
+{
+    background-image: url(../img/bg_marker/sp1-2er/tex_ang.png) !important;
+}
+
+/* SPALTE 1 / DREIFACH-MARKER (INSGESAMT 4):	[FNT, FNA, FTA] 	[NTA] */
+span.floskeln.negative_woerter.textverstaendnis
+{
+    background-image: url(../img/bg_marker/sp1-3er/flo_neg_tex.png) !important;
+}
+
+span.floskeln.negative_woerter.anglizismen
+{
+    background-image: url(../img/bg_marker/sp1-3er/flo_neg_ang.png) !important;
+}
+
+span.floskeln.textverstaendnis.anglizismen
+{
+    background-image: url(../img/bg_marker/sp1-3er/flo_tex_ang.png) !important;
+}
+
+span.negative_woerter.textverstaendnis.anglizismen
+{
+    background-image: url(../img/bg_marker/sp1-3er/neg_tex_ang.png) !important;
+}
+
+/* SPALTE 1 / VIERFACH-MARKER (INSGESAMT 1):	[FNTA] */
+span.floskeln.negative_woerter.textverstaendnis.anglizismen
+{
+    background-image: url(../img/bg_marker/sp1-4er/flo_neg_tex_ang.png) !important;
+}
+
+/* SPALTE 2 / DOPPEL-MARKER (INSGESAMT 1):	[FNTA] */
+span.nominalstil.aktiv_passiv
+{
+    background-image: url(../img/bg_marker/sp2-2er/nom_akt.png) !important;
+}
+
+/* SPALTE 4 / DOPPEL-MARKER (INSGESAMT 1):	[FNTA] */
+span.wortlaenge.lange_saetze
+{
+    background-image: url(../img/bg_marker/sp4-2er/wor_lan.png) !important;
+}
+
+.firstSite h2
+{
+    font-size: 24px;
+    line-height: 30px;
+    margin-bottom: 25px;
+}
+
+.firstSite h1, .firstSite h2, .firstSite h3, .firstSite h4, .firstSite h5, .firstSite h6
+{
+    font-weight: normal;
+    color: #262626;
+    text-transform: none;
+}
+
+h3.accordion-title
+{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px 15px;
+    background: #DFE2E6;
+    font-size: 18px;
+    line-height: 24px;
+    cursor: pointer;
+    border: 1px solid #DDD;
+    border-radius: 4px;
+}
+
+a, a:link
+{
+    color: #F00;
+    text-decoration: none;
+}
+
+.footer-text
+{
+    background-color: #F00000;
+    width: 900px;
+    display: inline-block;
+}
+
+.footer-site
+{
+    background-color: #FEEE00;
+    width: 700px;
+    display: inline-block;
+}
+
+.titleSite
+{
+    font-size: 20px;
+    width: 600px;
+    margin-top: 137px;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+.titleSite .titleText
+{
+    font-size: 18pt;
+    font-weight: bold;
+    line-height: 24pt;
+}
+
+.titleSite .dateText
+{
+    font-size: 12pt;
+    line-height: 21pt;
+}
+
+.titleSite .companyText
+{
+    font-size: 14pt;
+    line-height: 21pt;
+}
+
+.endSite
+{
+    margin-top: 150px;
+    font-size: 15px;
+}

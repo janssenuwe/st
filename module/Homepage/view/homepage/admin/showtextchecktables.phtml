@@ -1,0 +1,110 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+                <div class="uk-width-3-4">
+                    <h1>Einstellungen verwalten</h1>
+                    <div class='page_content'>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        <br>
+                        <br>
+                        <div class='table-responsive'>
+                            <table class="users_table table-striped table table-hover table_border">
+                                <tr>
+                                    <th class="user_th">Datenbank</th>
+                                    <th class="user_th"></th>
+                                </tr>
+                                <tr>
+                                    <td class="user_th">
+                                        Abkürzungen
+                                    </td>
+                                    <td class="user_th">
+                                        <a title='Abkürzungen bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'abkuerzungen_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="user_th">
+                                        Unbekannte Abkürzungen
+                                    </td>
+                                    <td class="user_th">
+                                        <a title='Unbekannte Abkürzungen bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'unknownabbreviations_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class='user_th'>
+                                        Anglizismen
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Anglizismen bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'anglizismen_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class='user_th'>
+                                        Floskeln
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Floskeln bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'floskeln_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class='user_th'>
+                                    <td class='user_th'>
+                                        Grundwortschatz / Textverständnis
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Grundwortschatz bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'grundwortschatz_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class='user_th'>
+                                        Nominalstil
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Nominalstil bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'nominalstil_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class='user_th'>
+                                        Wiederholungen
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Wiederholungen bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'wiederholungen_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class='user_th'>
+                                        Aktiv-Passiv
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Aktiv-Passiv bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'passivverben_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class='user_th'>
+                                        Negative Wörter
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Negative Wörter bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'negativewoerter_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class='user_th'>
+                                        Whitelist für Wörter mit Bindestrich/en
+                                    </td>
+                                    <td class='user_th'>
+                                        <a title='Whitelist für Wörter mit Bindestrich/en bearbeiten' href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'showtexttable', 'id' => 'whitelisthyphen_1'));?>?wort_name=&wort_ersatz=&wort_bearbeitet="><span class="glyphicon glyphicon-pencil"></span></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

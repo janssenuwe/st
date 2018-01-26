@@ -1,0 +1,217 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<div class="acp">
+    <style>
+        #behaviorProfilesResults .profileCard.profileCardAnswer {
+            display: block;
+        }
+    </style>
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+
+                <div class="uk-width-3-4">
+                    <h1>Verhaltensprofile verwalten</h1>
+
+                    <div class='page_content'>
+                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p>
+                        <div id="behaviorProfiles" class="uk-panel uk-panel-box uk-panel-box-secondary">
+
+                            <div id="cardMain" class="active profileCard" style="display: block;">
+                                <div data-action="cardAnswer" class="selectBox fristbox">
+                                    <h3><i class="uk-icon-asterisk"></i> Ergebnistexte bearbeiten</h3>
+                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>
+                                </div>
+
+                                <div data-action="cardQuestion" class="selectBox fristbox disabled">
+                                    <h3><i class="uk-icon-question"></i> Fragetexte bearbeiten</h3>
+                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>
+                                </div>
+
+                                <div data-action="cardResult" class="selectBox fristbox disabled">
+                                    <h3><i class="uk-icon-file-o"></i> Ergebnisse anzeigen</h3>
+                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>
+                                </div>
+
+                                <div data-action="cardSettings" class="selectBox fristbox disabled">
+                                    <h3><i class="uk-icon-cog"></i> Allgemeine Einstellungen</h3>
+                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat</p>
+                                </div>
+                            </div>
+
+                            <div id="cardAnswer" class="profileCard">
+
+                                <h3><i class="uk-icon-asterisk"></i> Ergebnistexte bearbeiten</h3>
+                                <ul id="behaviorProfilesResults" class="uk-list uk-list-striped">
+                                    <?php foreach ($this->arrResults as $strKey=>$arrResult){ ?>
+                                        <li>
+                                            <div class="header">
+                                                <h3><?=utf8_encode($strKey);?></h3>
+                                                <i class="uk-icon-chevron-down openButton"></i>
+                                            </div>
+                                            <?php foreach ($arrResult as $objResult): ?>
+                                            <div class="functionTextBox">
+                                                <h3><?=utf8_encode($this->arrFunction[$objResult->function_id])?></h3>
+                                                <div class="profileCard profileCardAnswer" data-type='answer' data-identifier="<?=$objResult->identifier;?>" data-function="<?=$objResult->function_id;?>">
+                                                    <div>
+                                                        <h3>Ansprache Kandidat</h3>
+                                                        <div class="editTextBox" data-type="address"><?=nl2br((empty($objResult->address) ? utf8_encode($arrResult[0]->address) : utf8_encode($objResult->address)));?></div>
+                                                    </div>
+                                                    <div>
+                                                        <h3>JOB</h3>
+                                                        <div class="editTextBox" data-type="job"><?=nl2br((empty($objResult->job) ? utf8_encode($arrResult[0]->job) : utf8_encode($objResult->job)));?></div>
+                                                    </div>
+                                                    <div>
+                                                        <h3>Beschreibende Eigenschaften</h3>
+                                                        <div class="editTextBox" data-type="properties"><?=nl2br((empty($objResult->properties) ? utf8_encode($arrResult[0]->properties) : utf8_encode($objResult->properties)));?></div>
+                                                    </div>
+                                                    <div>
+                                                        <h3>Was frustriert und demotiviert den Kandidaten</h3>
+                                                        <div class="editTextBox" data-type="demotivated"><?=nl2br((empty($objResult->demotivated) ? utf8_encode($arrResult[0]->demotivated) : utf8_encode($objResult->demotivated)));?></div>
+                                                    </div>
+                                                    <div>
+                                                        <h3>Wird motiviert durch Worte und Darstellungen wie</h3>
+                                                        <div class="editTextBox" data-type="positive"><?=nl2br((empty($objResult->positive) ? utf8_encode($arrResult[0]->positive) : utf8_encode($objResult->positive)));?></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <?php endforeach; ?>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+
+                            <div id="cardQuestion" class="profileCard">
+                                <h3><i class="uk-icon-question"></i> Fragen bearbeiten</h3>
+                                <ul id="behaviorProfilesResults" class="uk-list uk-list-striped">
+                                    <?php foreach ($this->arrResults as $result){ ?>
+                                        <li>
+                                            <div class="header">
+                                                <h3><?=$result['name']?></h3>
+                                                <i class="uk-icon-chevron-down openButton"></i>
+                                                <i class="uk-icon-trash-o delButton"></i>
+                                                <span class='info'>Funktion: <?=$this->arrFunction[$result['function_id']]?></span>
+                                            </div>
+                                            <div class="profileCard profileCardAnswer" data-type='answer' data-identifier="<?=nl2br($result['identifier'])?>">
+                                                <div class="editTextBox" data-type="address"><?=nl2br($result['address'])?></div>
+                                            </div>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+
+                            <div id="cardResult" class="profileCard">
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                            </div>
+                            <div class="button">
+                                <a class="uk-button" id="backButton"><i class="uk-icon-angle-double-left"></i> Zurück</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                $('#cardMain .selectBox').click(function() {
+                    var $objTarget  = $('#'+$(this).data().action);
+                    var $objCard    = $('#cardMain');
+
+                    $objCard.slideUp(400, function(){
+                        console.log($objTarget);
+                        $objTarget.addClass('active');
+                        $objTarget.slideDown(350);
+                        $('#behaviorProfiles .button').slideDown();
+                    });
+                });
+                $('#backButton').click(function() {
+                    var $objTarget  = $('#cardMain');
+                    var $objCard    = $('#behaviorProfiles .active');
+
+                    $objCard.slideUp(400, function(){
+                        $objCard.removeClass('active');
+                        $objTarget.slideDown(350);
+                        $('#behaviorProfiles .button').slideUp();
+                    });
+                });
+
+                // behaviorProfilesResults function
+                $('#behaviorProfilesResults .header .openButton').click(function(){
+                    var objButton     = this;
+                    var objCardAnswer = $(this).parent().parent().children('.functionTextBox');
+                    $(objCardAnswer).slideToggle(400, 'swing', function(){
+                        if ($(objCardAnswer).css('display') == 'none') {
+                            jQuery(objButton).removeClass('uk-icon-chevron-up');
+                            jQuery(objButton).addClass('uk-icon-chevron-down');
+                        }
+                        else {
+                            jQuery(objButton).removeClass('uk-icon-chevron-down');
+                            jQuery(objButton).addClass('uk-icon-chevron-up');
+                        }
+                    });
+                });
+
+                $('#behaviorProfilesResults .profileCardAnswer .editTextBox').click(function(){
+                    var strType             = $(this).data().type;
+                    var strText             = $(this).html();
+                    var intId               = $(this).parent().parent().data().identifier;
+                    $(this).hide();
+
+                    $objTextArea            = $(this).next();
+                    $objSaveTextArea        = $($objTextArea).next();
+
+                    if (!$objTextArea.length) {
+                        var $objTextArea    = $('<textarea></textarea>').insertAfter(this);
+                        $objTextArea.val(br2nl(strText));
+                        $objTextArea.autosize();
+
+                        var $objSaveTextArea    = $('<div class="textareaButtons">'     +
+                                                        '<i class="uk-icon-save"></i>'  +
+                                                    '</div>').insertAfter($objTextArea);
+
+                        $objSaveTextArea.click(function(){
+                            var $objSaveButton  = $(this);
+                            var $objTextArea    = $(this).parent().children('textarea');
+                            var $objTextDiv     = $(this).parent().children('.editTextBox');
+                            var strTextType     = $($objTextDiv).data().type
+                            var arrData         = $(this).parent().parent().data();
+                            var intId           = arrData.identifier;
+                            var intFunction     = arrData.function;
+
+                            $.ajax({
+                                type:        'POST',
+                                dataType:    'json',
+                                url:         '<?= $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'ajaxEditAnswerText'));?>',
+                                data:        {
+                                    identifier:     intId,
+                                    function:       intFunction,
+                                    type:           strTextType,
+                                    text:           $objTextArea.val()
+                                }
+                            }).done(function(data) {
+                                if (data.status = 'ok') {
+                                    $objTextArea.hide();
+                                    $objSaveButton.hide();
+                                    $objTextDiv.html(nl2br($objTextArea.val()));
+                                    $objTextDiv.show();
+                                }
+                            });
+
+                        });
+                    }
+                    else{
+                        $objTextArea.show();
+                        $objSaveTextArea.show();
+                    }
+
+
+
+                });
+            });
+        </script>
+    </div>
+</div>

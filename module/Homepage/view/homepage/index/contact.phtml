@@ -1,0 +1,84 @@
+<?php include_once('public/includes/user/header.php'); ?>
+
+	<div class="uk-container uk-container-center">
+		<div class="uk-clearfix">
+			<div class="sidebar">
+                <?php include_once('public/includes/user/sidebar.php'); ?>
+			</div>
+			
+			<div class="inhalt">
+                <?php if(!$boolSuccess): ?>
+				<h1><i class="uk-icon-question-circle"></i> Kontakt und Support</h1>
+
+				<p>Sie haben Fragen zu den Funktionen der TOOLBOX oder zur Optimierung Ihrer Stellenanzeigen im Allgemeinen. Dann schreiben Sie uns.</p>
+
+				<h2>Senden Sie uns eine Nachricht...</h2>
+				<form action="<?php echo $this->url('homepage/default', array('controller' => 'Index', 'action' => 'contact'));?>" method="post" class="uk-form">
+					<div class="uk-grid">
+						<div class="uk-width" style="width: 200px;">
+                            <small><strong>Name</strong></small><br />
+                            <input type="text" value="<?=utf8_encode($user->user_vorname).' '.utf8_encode($user->user_nachname);?>" disabled class="uk-width-1-1">
+                        </div>
+						<div class="uk-width" style="width: 20px;"></div>
+						<div class="uk-width" style="width: 200px;">
+                            <small><strong>E-Mail</strong></small><br>
+                            <input class="uk-width-1-1" type="text" value="<?=$user->user_email;?>" disabled>
+                        </div>
+					</div>
+					<div class="uk-grid uk-margin-top">
+						<div class="uk-width" style="width: 420px;">
+                            <small><strong>Betreff</strong></small><br />
+                            <input type="text" name="affected" value="<?=(isset($_POST['affected']) ? $_POST['affected'] : '');?>" maxlength="255" class="uk-width-1-1">
+                            <?php if(isset($arrError['affectedEmpty'])): ?>
+                                <b>Der Betreff darf nicht leer sein.</b>
+                            <?php elseif(isset($arrError['affectedLength'])): ?>
+                                <b>Der Betreff darf nicht länger als 255 Zeichen sein.</b>
+                            <?php endif; ?>
+                        </div>
+					</div>
+					<div class="uk-grid uk-margin-top">
+						<div class="uk-width" style="width: 420px;">
+                            <small><strong>Nachricht</strong></small><br />
+                            <textarea name="text" rows="7" placeholder="" class="uk-width-1-1"><?=(isset($_POST['text']) ? $_POST['text'] : '');?></textarea>
+                            <?php if(isset($arrError['textEmpty'])): ?>
+                                <b>Das Textfeld darf nicht leer sein.</b>
+                            <?php endif; ?>
+
+                        </div>
+					</div>
+					<div class="uk-grid uk-margin-top">
+						<div class="uk-width" style="width: 220px;"></div>
+						<div class="uk-width" style="width: 200px;">
+                            <button class="uk-button uk-width-1-1 gruen">Senden</button>
+                        </div>
+					</div>                                
+
+                </form>
+				
+				<br />
+				
+                <?php else: ?>
+                    <h1>Vielen Dank für Ihre Nachricht</h1>
+					<p>Ihre Anfrage wurde erfolgreich übermittelt. Wir werden uns umgehend um Ihr Anliegen kümmern und uns bei Ihnen melden.</p>
+                    <a href="" class="uk-button">Zurück zum Kontaktformular</a>
+                <?php endif; ?>
+				
+				<h2>Weitere Kontaktmöglichkeiten</h2>
+				<p>Sollten Sie das obenstehende Kontaktformular nutzen, haben wir bereits Ihre Kontakt- und Firmendaten vorliegen und können uns so schneller um Ihre Anfrage kümmern. Sie können uns aber auch jederzeit per E-Mail und Telefon erreichen:</p>
+				<div class="uk-grid" data-uk-grid-margin="">
+					<div class="uk-width-medium-1-2">
+						<div class="uk-panel uk-panel-box">
+							<h3 class="uk-panel-title"><i class="uk-icon-phone"></i> Telefon</h3>
+							<span class="uk-text-large uk-text-danger"><strong>+49 - 80 31 - 222 76 56</strong></span>
+						</div>
+					</div>
+					<div class="uk-width-medium-1-2">
+						<div class="uk-panel uk-panel-box">
+							<h3 class="uk-panel-title"><i class="uk-icon-envelope"></i> E-Mail</h3>
+							<a href="mailto:willkommen@aicovo.com?subject=Kontakt%20aus%20TOOLBOX-Kundenbereich"><span class="uk-text-large"><strong>willkommen@aicovo.com</strong></span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	

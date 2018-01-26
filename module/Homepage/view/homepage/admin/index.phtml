@@ -1,0 +1,137 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<script type="text/javascript" src="/check/public/js/chart.min.js"></script>
+<script type="text/javascript" src="/check/public/js/chartjs-option.js"></script>
+<div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+            <script>
+                $(document).ready(function(){
+                    var data = {
+                        labels: <?=json_encode(array_keys($arrRegistration));?>,
+                        datasets: [
+                            {
+                                label: "Registrations last 7 days",
+                                fillColor: "rgba(151,187,205,0.2)",
+                                strokeColor: "rgba(151,187,205,1)",
+                                pointColor: "rgba(151,187,205,1)",
+                                pointStrokeColor: "#fff",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(151,187,205,1)",
+                                data: <?=json_encode(array_values($arrRegistration));?>
+                            }
+                        ]
+                    };
+                    respChart($("#newUser7Days"), data);
+                    respChartPie($("#editorUsing"), <?=json_encode($arrEditorUse);?>);
+                });
+            </script>
+            <div class="uk-grid uk-grid-divider">
+
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+                <div class="uk-width-3-4">
+                    <h2>Willkommen <?php if($this->identity()){?> <?= $user->user_vorname." ".$user->user_nachname; ?><?php }?>,</h2>
+                    <p>Die Werkzeuge der TOOLBOX helfen Ihnen, Ihre Stellenanzeigen und Stellenausschreibungen zu optimieren. Das Ziel ist Stellenanzeigen mit Magnetwirkung: Die passenden Bewerber anziehen die unpassenden abstoßen.</p>
+                    <p>Die Werkzeuge, insbesondere der
+                        <a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'editor'));?>" class="">
+                            <i class="uk-icon-font"></i>Text-Optimierer</a>
+                        und der
+                        <a href="<?php echo $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'behaviorprofiles'));?>">
+                            <i class="uk-icon-users"></i> Profil-Wizard</a>
+                        , können einen erfahrenen Texter nicht ersetzen, ihn jedoch unterstützen und so die Arbeit erleichern.</p>
+                    <br />
+                    <div class="uk-grid" data-uk-grid-margin="">
+                        <div class="uk-width-medium-1-1">
+                            <div class="uk-panel uk-panel-header">
+                                <h3 class="uk-panel-title">
+                                    <i class="uk-icon-book"></i> Neu anmeldung der letzten 7 Tage
+                                </h3>
+                                <canvas width="width: 100%;" id="newUser7Days"></canvas>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-panel uk-panel-header">
+                                <h3 class="uk-panel-title">
+                                    <i class="uk-icon-font"></i> Text-Optimierer Nutzung
+                                </h3>
+                                <canvas style="width: 100%; height: 170px;" id="editorUsing"></canvas>
+                                <ul class="editorUse-legend">
+                                    <?php foreach($arrEditorUse as $arrRow): ?>
+                                    <li><span style="background-color:<?=$arrRow['color'];?>"></span><?=$arrRow['label'];?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-panel uk-panel-header">
+                                <h3 class="uk-panel-title">
+                                    <i class="uk-icon-users"></i> Profil-Wizard öffnen
+                                </h3>
+                                Wie von Zauberhand liefert der Profil-Wizard nach wenigen Klicks das Verhaltensprofil Ihrer Wunschkandidaten.
+                                Fügen Sie den Text einfach in Ihre Stellenanzeige ein.
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-panel uk-panel-header ">
+                                <h3 class="uk-panel-title"><i class="uk-icon-check-square-o"></i> Checklisten</h3>
+                                Sie finden mehrere Checklisten, die Ihnen helfen, Aufbau, Inhalt, Gestaltung, Headline und Text Ihrer Stellenanzeige zu optimieren.
+                            </div>
+                        </div>
+                        <div class="uk-width-medium-1-2">
+                            <div class="uk-panel uk-panel-header">
+                                <h3 class="uk-panel-title"><i class="uk-icon-medkit"></i> Experten-Check</h3>
+                                Sie erfahren, wo die Schwächen und die Potenziale Ihrer Stellenanzeige liegen. Sie erhalten eine Auswertung in Bezug auf
+                                den Aufbau, den Inhalt und die Wirkung Ihrer Stellenanzeige. Und natürlich sofort umsetzbare Empfehlungen.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+		<div class="uk-grid" data-uk-grid-margin="">
+			<div class="uk-width-medium-1-2">
+				<div class="uk-panel uk-panel-header">
+					<h3 class="uk-panel-title">
+					<a href="<?php echo $this->url('homepage/default', array('controller' => 'Admin', 'action' => 'editor'));?>" class="">
+					<i class="uk-icon-font"></i> Text-Optimierer öffnen
+					<i class="uk-icon-chevron-right"></i><i class="uk-icon-chevron-right"></i><i class="uk-icon-chevron-right"></i></a>
+					</h3>
+					Der Text-Optimierer hilft Ihnen, das Textverständnis entscheidend zu verbessern.
+					Er warnt Sie vor Anglizismen, Floskeln, langen Wörtern, langen Sätzen und Wiederholungen.
+					Mit nur einem Klick sehen Sie, wo und wie Sie Ihren Text optimieren können.
+				</div>
+			</div>
+			<div class="uk-width-medium-1-2">
+				<div class="uk-panel uk-panel-header">
+					<h3 class="uk-panel-title">
+					<a href="<?php echo $this->url('homepage/default', array('controller' => 'BehaviorProfiles', 'action' => 'behaviorprofiles'));?>"><i class="uk-icon-users"></i> Profil-Wizard öffnen
+					<i class="uk-icon-chevron-right"></i><i class="uk-icon-chevron-right"></i><i class="uk-icon-chevron-right"></i></a>
+					</h3>
+					Wie von Zauberhand liefert der Profil-Wizard nach wenigen Klicks das Verhaltensprofil Ihrer Wunschkandidaten.
+					Fügen Sie den Text einfach in Ihre Stellenanzeige ein. 
+				</div>
+			</div>
+			<div class="uk-width-medium-1-2">
+				<div class="uk-panel uk-panel-header ">
+					<h3 class="uk-panel-title"><i class="uk-icon-check-square-o"></i> Checklisten</h3>
+					 Sie finden mehrere Checklisten, die Ihnen helfen, Aufbau, Inhalt, Gestaltung, Headline und Text Ihrer Stellenanzeige zu optimieren.
+				</div>
+			</div>
+			<div class="uk-width-medium-1-2">
+				<div class="uk-panel uk-panel-header">
+					<h3 class="uk-panel-title"><i class="uk-icon-medkit"></i> Experten-Check</h3>
+					Sie erfahren, wo die Schwächen und die Potenziale Ihrer Stellenanzeige liegen. Sie erhalten eine Auswertung in Bezug auf
+					den Aufbau, den Inhalt und die Wirkung Ihrer Stellenanzeige. Und natürlich sofort umsetzbare Empfehlungen.
+				</div>
+			</div>
+		</div>
+		-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

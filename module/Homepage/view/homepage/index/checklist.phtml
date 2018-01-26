@@ -1,0 +1,110 @@
+<?php include_once('public/includes/user/header.php'); ?>
+
+	<div class="uk-container uk-container-center">
+		<div class="uk-clearfix">
+			<div class="sidebar">
+                <?php include_once('public/includes/user/sidebar.php'); ?>
+			</div>
+			
+			<div class="inhalt">
+				<h1><i class="uk-icon-check-square-o"></i> Checklisten und Informationen</h1>
+				
+				<p class="uk-margin-bottom">Hier finden Sie nützliche PDF-Dokumente in Form von Checklisten und Informationen zu (fast) allen Themen rund um erfolgreiche Stellenauschschreibungen und Stellenanzeigen als Download zur Verfügung:</p>
+				
+				<div class="uk-margin-small-bottom"><strong>ANZEIGEN:</strong><br /></div>
+				<!-- Filter Controls -->
+				<ul id="my-id" class="uk-subnav uk-margin-large-bottom">
+					<li data-uk-filter=""><a class="uk-button" href="">Alle</a></li>
+					<li data-uk-filter="checklisten"><a class="uk-button" href="">Checklisten</a></li>
+					<li data-uk-filter="informationen"><a class="uk-button" href="">Informartionen</a></li>
+				</ul>				
+
+				
+				<div class="uk-grid" data-uk-grid="{gutter: 20, controls: '#my-id'}">
+					<div data-uk-filter="informationen" class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-magnetwirkung.png" alt="">
+							</div>
+							<p><small><strong>INFORMATION</strong></small><br />Stellenanzeigen mit Magnetwirkung</p>
+							<a href="/check/public/homepage/Index/download?pdf=Stellenanzeigen-mit-Magnetwirkung.pdf" target="_blank" class="uk-button uk-button-small" target="_blank"><i class="uk-icon-file-pdf-o"></i> PDF-Download</a>
+						</div>
+					</div>
+					
+					<div data-uk-filter="checklisten "class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-fehler.png" alt="">
+							</div>
+							<p><small><strong>CHECKLISTE</strong></small><br />Die 15 schlimmsten Fehler in Stellenanzeigen</p>
+							<a href="/check/public/homepage/Index/download?pdf=Die-15-schlimmsten-Fehler-in-Stellenanzeigen.pdf" class="uk-button uk-button-small" target="_blank"><i class="uk-icon-file-pdf-o"></i> PDF-Download</a>
+						</div>
+					</div>
+					
+					<div data-uk-filter="informationen" class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-bahnhof.jpg" alt="">
+							</div>
+							<p><small><strong>INFORMATION</strong></small><br />Floskelfreie Stellenanzeigen - wär' das nicht schön?</p>
+							<a href="/check/public/homepage/Index/download?pdf=Floskelfreie-Stellenanzeigen.pdf" class="uk-button uk-button-small" target="_blank"><i class="uk-icon-file-pdf-o"></i> PDF-Download</a>
+						</div>
+					</div>
+
+					<div data-uk-filter="informationen" class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-bingo-stellenanzeigen.png" alt="">
+							</div>
+							<p><small><strong>INFORMATION</strong></small><br />Bullshit-BINGO für Stellenanzeigen</p>
+							<a href="/check/public/homepage/Index/download?pdf=Bullshit-Bingo-Stellenanzeigen.pdf" class="uk-button uk-button-small" target="_blank"><i class="uk-icon-file-pdf-o"></i> PDF-Download</a>
+						</div>
+					</div>
+					
+					<div data-uk-filter="informationen" class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-bingo-anforderungsprofile.png" alt="">
+							</div>
+							<p><small><strong>INFORMATION</strong></small><br />Bullshit-BINGO für Anforderungsprofile</p>
+							<a href="/check/public/homepage/Index/download?pdf=Bullshit-Bingo-Anforderungsprofile.pdf" class="uk-button uk-button-small" target="_blank"><i class="uk-icon-file-pdf-o"></i> PDF-Download</a>
+						</div>
+					</div>
+					
+					<div data-uk-filter="informationen" class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-schneiderlein.png" alt="">
+							</div>
+							<p><small><strong>INFORMATION</strong></small><br />Von cleveren Schneidern und anderen Superhelden</p>
+							<a href="/check/public/homepage/Index/download?pdf=Von-cleveren-Schneidern-und-anderen-Superhelden.pdf" class="uk-button uk-button-small" target="_blank"><i class="uk-icon-file-pdf-o"></i> PDF-Download</a>
+						</div>
+					</div>					
+					
+					<div data-uk-filter="checklisten" class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-texten.jpg" alt="">
+							</div>
+							<div class="uk-panel-badge uk-badge uk-badge-warning">in Kürze verfügbar</div>
+							<p><small><strong>CHECKLISTE</strong></small><br />1x1 für gutes Texten<br /><br /></p>
+							<button href="" class="uk-button uk-button-small" target="_blank" disabled><i class="uk-icon-file-pdf-o"></i> PDF-Download</button>
+						</div>
+					</div>
+					
+					<div data-uk-filter="checklisten" class="uk-width-medium-1-3">
+						<div class="uk-panel uk-panel-box">
+							<div class="uk-panel-teaser">
+								<img src="../../img/checklisten/teaser-azubis-off.jpg" alt="">
+							</div>
+							<p><div class="uk-panel-badge uk-badge uk-badge-warning">in Kürze verfügbar</div><small><strong>CHECKLISTE</strong></small><br />Stellenanzeigen für Azubis attraktiv gestalten</p>
+							<button href="" class="uk-button uk-button-small" target="_blank" disabled><i class="uk-icon-file-pdf-o"></i> PDF-Download</button>
+						</div>
+					</div>
+					
+				</div>
+				
+
+			</div>
+		</div>
+	</div>	

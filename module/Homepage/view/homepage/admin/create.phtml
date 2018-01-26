@@ -1,0 +1,98 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<div class="acp">
+    <div class="middle">
+        <div class="uk-container uk-container-center">
+            <div class="uk-grid uk-grid-divider">
+                <div class="uk-width-1-4">
+                    <?php include_once('public/includes/admin/sidebar.php'); ?>
+                </div>
+
+                <div class="uk-width-3-4">
+                    <h1>Neuen Benutzer anlegen</h1>
+
+                    <div class='page_content'>
+                        <?php
+                            $form->prepare();
+                            $form->setAttribute('action', $this->url('homepage/default', array('controller' => 'admin', 'action' => 'create')));
+                            $form->setAttribute('method', 'post');
+                            echo $this->form()->openTag($form);
+                        ?>
+                        <div class='registration_formular'>
+                            <div class='div_row'>
+                                <div class='reg_label'>Firmenname</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_firmenname')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Anrede *</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_anrede')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Titel</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_titel')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Vorname *</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_vorname')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Nachname *</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_nachname')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Land</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_land')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Straße / Nr.</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_strasse'));
+                                                                 echo $this->formRow($form->get('user_hausnummer'));?>
+                                </div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>PLZ / Ort</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_plz')); echo $this->formRow($form->get('user_ort')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>E-Mail *</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_email')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Passwort *</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_passwort')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Ländervorwahl</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_laendervorwahl')); ?></div>
+                            </div>
+
+                            <div class='div_row'>
+                                <div class='reg_label'>Vorwahl / Telefonnummer</div>
+                                <div class='reg_textfield'><?php echo $this->formRow($form->get('user_vorwahl')); echo $this->formRow($form->get('user_telefon')); ?></div>
+                            </div>
+
+
+
+                            <div>
+                                <div class='submit'><?php echo $this->formSubmit($form->get('submit')); ?></div>
+                                <?php
+                                    echo $this->form()->closeTag();
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,471 @@
+<?php include_once('public/includes/admin/header.php'); ?>
+<script>
+    $(document).ready(function () {
+        boolFirstCall = true;
+
+        $('[data-uk-tab]').on('change.uk.tab', function (event, activeItem, previousItem) {
+
+            var strURL = window.location.href;
+            if (strURL.search(/&typ=[1-3]/) > -1) {
+                strURL = strURL.replace(/&typ=[1-3]/, '&typ=' + activeItem.data().id);
+            }
+            else {
+                strURL = strURL + '&typ=' + activeItem.data().id;
+            }
+            //console.log(strURL); // U. Janssen , 6.12.2017: commented out since useless (page is reloaded and the console log is overwritten)
+            window.location = strURL;
+        });
+
+        $('.userlist-action').click(function () {
+            var intDetailsId = $(this).data().id;
+            $('tr[data-user-details="' + intDetailsId + '"]').toggle();
+
+            if ($('tr[data-user-details="' + intDetailsId + '"]').css('display') == 'none')
+                $(this).children('i').removeClass('uk-icon-chevron-up').addClass('uk-icon-chevron-down');
+            else
+                $(this).children('i').removeClass('uk-icon-chevron-down').addClass('uk-icon-chevron-up');
+
+        });
+
+        $('.mail-action').click(function (e) {
+            var intId = $(this).data().id;
+            var strMail = $(this).data().mail;
+
+            // Versteckt die Messageboxen
+            $('#mail-modal .messagebox div').hide();
+
+            // Selektiere erste Vorlage
+            $('#mail-modal .uk-form .selectTextTemplate option:first').attr('selected', 'selected').change();
+
+            var modal = UIkit.modal("#mail-modal");
+            if (!modal.isActive()) {
+                $('#mail-modal .uk-form input[name="id"]').val(intId);
+                $('#mail-modal .uk-form input.user-email').val(strMail);
+                modal.show();
+            }
+            else
+                modal.hide();
+        });
+        
+        $('.confirmation-action').click(function(e) {
+             UIkit.modal.alert($(this).data("link"));
+        });
+
+        var arrMails = <?php echo json_encode($arrAdminMain); ?>;
+        $('#mail-modal .uk-form .selectTextTemplate').change(function (e) {
+            var objSelected = $(this).children('option:selected');
+            var arrMail = arrMails[objSelected.val()];
+
+            $('#mail-modal .uk-form input[name="subject"]').val(arrMail.subject);
+            $('#mail-modal .uk-form textarea[name="content"]').val(arrMail.content);
+        }).change();
+
+        $("#mail-modal .uk-form").submit(function (e) {
+            e.preventDefault();
+            $("#mail-modal .uk-form .formSubmit").attr('disabled', true);
+
+            $.ajax({
+                method: 'POST',
+                url: '<?php echo $this->url('homepage/default', array('controller' => 'admin', 'action' => 'ajaxSendMail'));?>',
+                data: $(this).serialize(),
+                dataType: 'json'
+            }).done(function (data) {
+                if (data.status == "ok") {
+                    $('#mail-modal .messagebox .uk-alert-success').slideDown('slow', function () {
+                        setTimeout(function () {
+                            $('#mail-modal .messagebox div').hide();
+                            UIkit.modal("#mail-modal").hide();
+                            $("#mail-modal .uk-form .formSubmit").attr('disabled', false);
+                        }, 1500);
+                    });
+                }
+                else if (data.status == 'error') {
+                    var objErrorBox = $('#mail-modal .messagebox .uk-alert-danger');
+                    var strError = " ";
+
+                    for (var i in data.text)
+                        strError += data.text[i] + '<br> ';
+
+                    if (objErrorBox.css('display') != 'block') {
+                        objErrorBox.html(strError);
+                        objErrorBox.slideDown('slow', function () {
+                            $("#mail-modal .uk-form .formSubmit").attr('disabled', false);
+                        });
+                    }
+                    else {
+                        objErrorBox.slideUp('slow', function () {
+                            objErrorBox.html(strError);
+                            objErrorBox.slideDown('slow', function () {
+                                $("#mail-modal .uk-form .formSubmit").attr('disabled', false);
+                            });
+                        });
+                    }
+                }
+                else {
+                    var objErrorBox = $('#mail-modal .messagebox .uk-alert-danger');
+                    var strError = " Es ist ein Server Fehler aufgetreten, bitte kontaktieren Sie einen Techniker.";
+
+                    if (objErrorBox.css('display') != 'block') {
+                        objErrorBox.html(strError);
+                        objErrorBox.slideDown('slow', function () {
+                            $("#mail-modal .uk-form .formSubmit").attr('disabled', false);
+                        });
+                    }
+                    else {
+                        objErrorBox.slideUp('slow', function () {
+                            objErrorBox.html(strError);
+                            objErrorBox.slideDown('slow', function () {
+                                $("#mail-modal .uk-form .formSubmit").attr('disabled', false);
+                            });
+                        });
+                    }
+                }
+            });
+        });
+
+        $(".tag-box a").click(function () {
+            var strTag = $(this).data().tag;
+
+            $('textarea[name="content"]').insertAtCaret(strTag);
+        });
+    });
+</script>
+<div id="userlist-menu"></div>
+<div id="mail-modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+
+        <div class="uk-modal-header">
+            <h3>Benutzer kontaktieren</h3>
+        </div>
+        <div class="messagebox">
+            <div class="uk-alert uk-alert-success"> Nachricht erfolgreich verschickt !</div>
+            <div class="uk-alert uk-alert-danger"></div>
+        </div>
+        <form class="uk-form">
+            <input type="hidden" style="display: none" name="id" value="0"/>
+
+            <div class="uk-form-icon" style="float: left;">
+                <i class="uk-icon-envelope-o" style="top: 37%;"></i>
+                <input class="user-email" type="text" value="" disabled>
+            </div>
+            <div>
+                Vorlage:
+                <select class="selectTextTemplate">
+                    <?php foreach ($arrAdminMain as $key => $value): ?>
+                        <option value="<?php echo $key; ?>"><?php echo $value['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <input class="uk-width-1-1" type="text" name="subject" placeholder="Betreff" value=""/>
+            <textarea class="uk-width-1-1" cols="" rows="15" name="content" placeholder="E-Mail"></textarea>
+
+            <div class="buttonBar">
+                <button class="uk-button uk-button-success formSubmit" type="submit">Senden</button>
+            </div>
+        </form>
+        <div class="uk-modal-footer">
+            <b>Platzhalter:</b>
+
+            <div class="tag-box">
+                <a class="uk-button uk-button-small" data-tag="[FIRMA]">Firma <i style="font-size: 9px">[FIRMA]</i></a>
+                <a class="uk-button uk-button-small" data-tag="[ANREDE]">Anrede <i
+                        style="font-size: 9px">[ANREDE]</i></a>
+                <a class="uk-button uk-button-small" data-tag="[VORNAME]">Vorname <i
+                        style="font-size: 9px">[VORNAME]</i></a>
+                <a class="uk-button uk-button-small" data-tag="[NACHNAME]">Nachname <i
+                        style="font-size: 9px">[NACHNAME]</i></a>
+                <a class="uk-button uk-button-small" data-tag="[EMAIL]">E-Mail <i style="font-size: 9px">[EMAIL]</i></a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="acp settings">
+<div class="middle">
+<div class="uk-container uk-container-center">
+<div class="uk-grid uk-grid-divider">
+<div class="uk-width-1-4">
+    <?php include_once('public/includes/admin/sidebar.php'); ?>
+</div>
+
+
+<div class="uk-width-3-4">
+<h1>Benutzer</h1>
+
+<div class='page_content'>
+<br>
+<br>
+<a class='create_user' href="<?php echo $this->url('homepage/default', array(
+    'controller' => 'admin',
+    'action'     => 'create'
+)); ?>"><span class="glyphicon glyphicon-plus"></span> Neuen Benutzer anlegen</a>
+<ul class="uk-tab uk-tab-flip userlist-tabs" data-uk-tab>
+    <li data-id="3" <?php echo(request_var('typ', 1) == 3 ? 'class="uk-active"' : ''); ?>><a
+            data-id="3" href="#">gesperrt</a></li>
+    <li data-id="2" <?php echo(request_var('typ', 1) == 2 ? 'class="uk-active"' : ''); ?>><a
+            data-id="2" href="#">nicht bestätigt</a></li>
+    <li data-id="1" <?php echo(request_var('typ', 1) == 1 ? 'class="uk-active"' : ''); ?>><a
+            data-id="1" href="#">Standard</a></li>
+</ul>
+<div class='table-responsive'>
+<table class="users_table table-striped table table-hover table_border">
+    <tr>
+        <th class="user_th">Id</th>
+        <th class="user_th">Name</th>
+        <th class="user_th">Firma</th>
+        <th class="user_th"></th>
+    </tr>
+    <tr>
+        <?php
+        $form->prepare();
+        $form->setAttribute('action', $this->url('homepage/default', array(
+            'controller' => 'admin',
+            'action'     => 'showusers',
+            'id'         => 1
+        )));
+        $form->setAttribute('method', 'get');
+        echo $this->form()->openTag($form);
+        ?>
+        <td class="user_th">
+            <!--<?php echo $this->formRow($form->get('entry')->setValue(@$get_array['entry'])); ?>--></td>
+        <td class="user_th"><?php echo $this->formRow($form->get('user_name')->setValue($get_array['user_name'])); ?></td>
+        <td class="user_th"><?php echo $this->formRow($form->get('user_firma')->setValue($get_array['user_firma'])); ?></td>
+        <td class="user_th"><?php echo $this->formRow($form->get('submit')->setValue('Suchen')); ?></td>
+        <?php
+        echo $this->form()->closeTag();
+        ?>
+    </tr>
+    <?php
+    foreach ($rowset as $row):
+        if ($row['freigeschaltet'] == \Auth\Model\Auth::USER_LOCKED)
+            echo "<tr class='warten'>";
+        elseif ($row['freigeschaltet'] == \Auth\Model\Auth::USER_BLOCKED)
+            echo "<tr class='gesperrt'>";
+        else
+            echo "<tr>";
+
+        $strHomePage = explode("@", $row['user_email']);
+        $strHomePage = (count($strHomePage) >  0 ? "http://".$strHomePage[1] : "");
+        
+        ?>
+        <td class="user_th"><?php echo $row['id']; ?></td>
+        <td class="user_th"><?php echo utf8_encode(truncate($row['user_vorname'] . '&nbsp;' . $row['user_nachname'], 45)); ?></td>
+        <td class="user_th"><?php echo utf8_encode(truncate($row['user_firmenname'], 35)); ?></td>
+        <td class="user_th"><a title='Benutzer bearbeiten'
+                               href="<?php echo $this->url('homepage/default', array(
+                                   'controller' => 'admin',
+                                   'action'     => 'update',
+                                   'id'         => $row['id']
+                               )); ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a title='Benutzer löschen' href="<?php echo $this->url('homepage/default', array(
+            'controller' => 'admin',
+            'action'     => 'delete',
+            'id'         => $row['id']
+        )); ?>" onclick="return confirm('Wollen Sie diesen Benutzer wirklich löschen?')"><i
+                style="font-size: 17px;" class="glyphicon uk-icon-trash-o"></i></a>
+
+
+
+
+        <?php if ($row['freigeschaltet'] == \Auth\Model\Auth::USER_LOCKED): ?>
+        <a class="state_unlock" title='Benutzer freischalten' href="<?php echo $this->url('homepage/default', array(
+            'controller' => 'admin',
+            'action'     => 'freischalten',
+            'id'         => $row['id']
+        )); ?>"><span class="glyphicon glyphicon-hourglass"></span></a>
+    <?php endif; ?>
+
+        <a class="userlist-action" title='weitere Benutzer Aktionen' data-id="<?php echo $row['id']; ?>"><i class="uk-icon-chevron-down"></i></a>
+
+        <?php if ($row['rolle'] >= \Auth\Model\Auth::ROLE_ADMIN): ?>
+        <span class="state_admin glyphicon glyphicon-cog"></span></td>
+    <?php elseif ($row['rolle'] < 2): ?>
+        <a class="state_normal" title='Nutzerstufe 0'
+           href="<?php echo $this->url('homepage/default', array(
+               'controller' => 'admin',
+               'action'     => 'changeRole',
+               'id'         => $row['id']
+           )); ?>"><span class="glyphicon glyphicon-user"></span></a></td>
+    <?php
+    elseif ($row['rolle'] == 7): ?>
+        <a class="state_normal" title='Nutzerstufe 1'
+           href="<?php echo $this->url('homepage/default', array(
+               'controller' => 'admin',
+               'action'     => 'changeRole',
+               'id'         => $row['id']
+           )); ?>"><span class="glyphicon glyphicon-star-empty"></span></a></td>
+    <?php
+    elseif ($row['rolle'] == 10): ?>
+        <a class="state_normal" title='Nutzerstufe 2'
+           href="<?php echo $this->url('homepage/default', array(
+               'controller' => 'admin',
+               'action'     => 'changeRole',
+               'id'         => $row['id']
+           )); ?>"><span class="glyphicon glyphicon-star"></span></a></td>
+    <?php endif; ?>
+        </tr>
+        <tr style="display: none;" data-user-details="<?php echo $row['id']; ?>">
+            <td colspan="4" style="padding: 4px">
+                <table style="border: 0; width: 100%">
+                    <tr>
+                        <td style="width: 70px;">
+                            <b>Name:</b>
+                        </td>
+                        <td style="width: 255px;">
+                            <?php echo (empty($row['user_titel']) ? $row['user_anrede'] : $row['user_anrede'] . " " . $row['user_titel']) . " " . utf8_encode($row['user_vorname']) . " " . utf8_encode($row['user_nachname']); ?>
+                        </td>
+
+                        <td style="width: 75px;">
+                            <b>E-Mail:</b>
+                        </td>
+                        <td>
+                            <?php echo $row['user_email']; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70px;">
+                            <b>Adresse:</b>
+                        </td>
+                        <td style="width: 255px;">
+                            <?php echo utf8_encode($row['user_strasse']) . ' ' . utf8_encode($row['user_hausnummer']); ?>
+                        </td>
+
+                        <td style="width: 75px;">
+                            <b>Telefon:</b>
+                        </td>
+                        <td>
+                            <?php echo (!empty($row['user_laendervorwahl']) ? '+' : '') . $row['user_laendervorwahl'] . ' ' . $row['user_vorwahl'] . ' ' . $row['user_telefon']; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 70px;">
+                            <b>Ort:</b>
+                        </td>
+                        <td style="width: 255px;">
+                            <?php echo utf8_encode(str_pad($row['user_plz'], 5, "0", STR_PAD_LEFT)) . ' ' . utf8_encode($row['user_ort']); ?>
+                        </td>
+
+                        <td style="width: 75px;">
+                            <b>Aktionen:</b>
+                        </td>
+                        <td>
+                            <?php if(!empty($strHomePage)): ?>
+                            <a class='state_block' title='Webseite' href="<?php echo $strHomePage; ?>" target="_blank">
+                                <span class='glyphicon glyphicon-home'></span>
+                            </a>
+                            <?php endif; ?>
+                            <a class='state_block mail-action' title='Benutzer kontaktieren' data-id='<?php echo $row['id']; ?>' data-mail='<?php echo $row['user_email']; ?>'>
+                                <span class='glyphicon glyphicon-envelope'></span>
+                            </a>
+                            <?php if ($row['freigeschaltet'] != \Auth\Model\Auth::USER_BLOCKED): ?>
+                                <a class='state_block' style='color: #ff0000;' title='Benutzer sperren'
+                                   href='<?php echo $this->url('homepage/default', array(
+                                       'controller' => 'admin',
+                                       'action'     => 'sperren'
+                                   )); ?>/<?php echo $row['id']; ?>'><span
+                                        class='glyphicon glyphicon-ban-circle'></span></a>
+                            <?php else: ?>
+                                <a class='state_block' style='color: #889d00;' title='Benutzer entsperren'
+                                   href='<?php echo $this->url('homepage/default', array(
+                                       'controller' => 'admin',
+                                       'action'     => 'freischalten'
+                                   )); ?>/<?php echo $row['id']; ?>'><span
+                                        class='glyphicon glyphicon-ok-sign'></span></a>
+                            <?php endif; ?>
+                            <a class='state_block confirmation-action' title='Bestätigungslink anzeigen' data-id='<?php echo $row['id']; ?>' data-link='http://www.stellenanzeigen-texten.de/check/public/auth/registration/confirm-email/<?php echo $row['user_hashid']; ?>'>
+                                <span class='glyphicon glyphicon-saved'></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <p></p>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<ul class="pagination">
+    <?php
+    if ($index > 1)
+    {
+        ?>
+        <li>
+            <a href="<?php echo $this->url('homepage/default', array(
+                'controller' => 'Admin',
+                'action'     => 'showusers',
+                'id'         => ((int)$index - 1)
+            )); ?>?user_name=<?php echo str_replace(' ', '+', $get_array['user_name']); ?>&user_adresse=<?php echo str_replace(' ', '+', $get_array['user_adresse']); ?>&user_email=<?php echo $get_array['user_email']; ?>&user_firma=<?php echo $get_array['user_firma']; ?>&typ=<?php echo request_var('typ', 1); ?>">&laquo;</a>
+        </li>
+    <?php
+    }
+    ?>
+    <?php
+    if ($index > 0 && $index < 3)
+    {
+        for ($i = 1; $i <= $index + 4; $i++)
+        {
+            if ($i <= $max && $i < 6)
+            {
+                ?>
+                <li>
+                    <a href="<?php echo $this->url('homepage/default', array(
+                        'controller' => 'Admin',
+                        'action'     => 'showusers',
+                        'id'         => $i
+                    )); ?>?user_name=<?php echo str_replace(' ', '+', $get_array['user_name']); ?>&user_adresse=<?php echo str_replace(' ', '+', $get_array['user_adresse']); ?>&user_email=<?php echo $get_array['user_email']; ?>&user_firma=<?php echo $get_array['user_firma']; ?>&typ=<?php echo request_var('typ', 1); ?>"><?php echo $i ?></a>
+
+
+                </li>
+            <?php
+            }
+        }
+    }
+    ?>
+    <?php
+    if ($index >= 3)
+    {
+        for ($i = $index - 2; $i <= $index + 2; $i++)
+        {
+
+            if ($index >= $max)
+            {
+                continue;
+            }
+            ?>
+            <li>
+                <a href="<?php echo $this->url('homepage/default', array(
+                    'controller' => 'Admin',
+                    'action'     => 'showusers',
+                    'id'         => $i
+                )); ?>?user_name=<?php echo str_replace(' ', '+', $get_array['user_name']); ?>&user_adresse=<?php echo str_replace(' ', '+', $get_array['user_adresse']); ?>&user_email=<?php echo $get_array['user_email']; ?>&user_firma=<?php echo $get_array['user_firma']; ?>&typ=<?php echo request_var('typ', 1); ?>"><?php echo $i ?></a>
+            </li>
+        <?php
+        }
+        ?>
+    <?php
+    }
+    ?>
+    <?php
+    if ((int)$index < $max)
+    {
+        ?>
+        <li>
+            <a href="<?php echo $this->url('homepage/default', array(
+                'controller' => 'Admin',
+                'action'     => 'showusers',
+                'id'         => ((int)$index + 1)
+            )); ?>?user_name=<?php echo str_replace(' ', '+', $get_array['user_name']); ?>&user_adresse=<?php echo str_replace(' ', '+', $get_array['user_adresse']); ?>&user_email=<?php echo $get_array['user_email']; ?>&user_firma=<?php echo $get_array['user_firma']; ?>&typ=<?php echo request_var('typ', 1); ?>">&raquo;</a>
+        </li>
+    <?php
+    }
+    ?>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

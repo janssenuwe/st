@@ -1,0 +1,70 @@
+<?php include_once('public/includes/user/header.php'); ?>
+
+<div class="uk-container uk-container-center">
+
+	<div class="uk-clearfix">
+	
+		<div class="sidebar">
+			<?php include_once('public/includes/user/sidebar.php'); ?>
+		</div>
+		
+		<div class="inhalt">
+			<h2>Willkommen <?php if($this->identity()){?> <?= $user->user_vorname." ".utf8_encode($user->user_nachname); ?><?php }?>!</h2>
+	
+			<p>Die Werkzeuge der TOOLBOX helfen Ihnen, Ihre Stellenanzeigen und Stellenausschreibungen zu optimieren. Das Ziel ist Stellenanzeigen mit Magnetwirkung: Die passenden Bewerber anziehen die unpassenden abstoßen.</p>
+
+			<p>Die Werkzeuge, insbesondere der Text-Optimierer und der  Profil-Wizard , können einen erfahrenen Texter nicht ersetzen, ihn jedoch unterstützen und so die Arbeit erleichern.</p>	
+	
+			<div class="uk-grid uk-margin-large-top" data-uk-grid-margin="">
+				<div class="uk-width-medium-1-2">
+					<div class="uk-panel uk-panel-header">
+						<h3 class="uk-panel-title">
+						<a href="<?php echo $this->url('homepage/default', array('controller' => 'Index', 'action' => 'editor'));?>" class="">
+						<i class="uk-icon-font"></i> Text-Optimierer öffnen
+						<i class="uk-icon-chevron-right"></i><i class="uk-icon-chevron-right"></i><i class="uk-icon-chevron-right"></i></a>
+						</h3>
+						Der Text-Optimierer hilft Ihnen, das Textverständnis entscheidend zu verbessern.
+						Er warnt Sie vor Anglizismen, Floskeln, langen Wörtern, langen Sätzen und Wiederholungen.
+						Mit nur einem Klick sehen Sie, wo und wie Sie Ihren Text optimieren können.
+					</div>
+				</div>
+				<div class="uk-width-medium-1-2">
+					<div class="uk-panel uk-panel-header">
+						<div class="uk-panel-badge uk-badge uk-badge-warning">in Kürze verfügbar</div>
+						<h3 class="uk-panel-title">
+						<i class="uk-icon-users"></i> Profil-Wizard öffnen
+						</h3>
+						Wie von Zauberhand liefert der Profil-Wizard nach wenigen Klicks das Verhaltensprofil Ihrer Wunschkandidaten.
+						Fügen Sie den Text einfach in Ihre Stellenanzeige ein. 
+					</div>
+				</div>
+				<div class="uk-width-medium-1-2">
+					<div class="uk-panel uk-panel-header">
+						<h3 class="uk-panel-title"><a href="<?php echo $this->url('homepage/default', array('controller' => 'Index', 'action' => 'expertcheck'));?>"><i class="uk-icon-medkit"></i> Experten-Check</a></h3>
+						Sie erfahren, wo die Schwächen und die Potenziale Ihrer Stellenanzeige liegen. Sie erhalten eine Auswertung in Bezug auf
+						den Aufbau, den Inhalt und die Wirkung Ihrer Stellenanzeige. Und natürlich sofort umsetzbare Empfehlungen.
+					</div>
+				</div>
+				<div class="uk-width-medium-1-2">
+					<div class="uk-panel uk-panel-header ">
+						<h3 class="uk-panel-title"><a href="<?php echo $this->url('homepage/default', array('controller' => 'Index', 'action' => 'checklist'));?>"><i class="uk-icon-check-square-o"></i> Checklisten</a></h3>
+						 Sie finden mehrere Checklisten, die Ihnen helfen, Aufbau, Inhalt, Gestaltung, Headline und Text Ihrer Stellenanzeige zu optimieren.
+					</div>
+				</div>
+			</div>
+	
+			<div class="uk-panel uk-panel-box uk-margin-large-top">
+				<div class="uk-clearfix">
+					<div class="uk-float-left">
+						<strong class="ziel-titel">Das Ziel ist Stellenanzeigen mit Magnetwirkung:</strong><br />
+						<span class="ziel">Die passenden Bewerber anziehen, die unpassenden abstoßen.</span>
+					</div>				
+					<div class="uk-float-left uk-align-right uk-margin-remove"><img src="../img/ziel-magnet.png" /></div>
+				</div>
+			</div>
+	
+		</div>
+		
+	</div>
+	
+</div>	

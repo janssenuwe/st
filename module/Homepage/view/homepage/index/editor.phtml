@@ -1,0 +1,450 @@
+<?php include_once('public/includes/user/header.php'); ?>
+
+    <div class="uk-container uk-container-center">
+        <div class="uk-clearfix">
+            <div class="sidebar">
+                <?php include_once('public/includes/user/sidebar.php'); ?>
+            </div>
+
+            <div class="inhalt">
+
+                <div class='page_content'>
+                    <div class="uk-grid" data-uk-grid-match>
+                    	<div class="uk-width-3-4"><h1><i class="uk-icon-font"></i> Text-Optimierer</h1></div>
+                    	<div class="uk-width-1-4"><a href="#" id="markierungenAufheben" class="uk-button uk-width-1-1 markierungenAufheben"><i class="uk-icon-times"></i> Marker löschen</a></div>
+                    </div>					
+					<div class="uk-grid pruef-buttons">
+                        <div id="buttonset_1" class="uk-width-1-4">
+                            <a href="#" data-action="checkFloskel"          id="floskeln" class="editorButton uk-button uk-width-1-1 floskeln"><i class="uk-icon"></i> Floskeln</a>
+                            <a href="#" data-action="checkNegativeWoerter"  id="negative_woerter" class="editorButton uk-button uk-width-1-1 negative-woerter"><i class="uk-icon"></i> Negative Wörter</a>
+                            <a href="#" data-action="checkTextverstaendnis" id="textverstaendnis" class="editorButton uk-button uk-width-1-1 textverstaendnis"><i class="uk-icon"></i> Textverständnis</a>
+                            <a href="#" data-action="checkAnglizismen"      id="anglizismen" class="editorButton uk-button uk-width-1-1 anglizismen"><i class="uk-icon"></i> Anglizismen</a>
+                        </div>
+                        <div id="buttonset_2" class="uk-width-1-4">
+                            <a href="#" data-action="checkNominalstil"      id="nominalstil" class="editorButton uk-button uk-width-1-1 nominalstil"><i class="uk-icon"></i> Nominalstil</a>
+                            <a href="#" data-action="checkAktivPassiv"      id="aktiv_passiv" class="editorButton uk-button uk-width-1-1 aktiv-passiv"><i class="uk-icon"></i> Aktiv-Passiv</a>
+                        </div>
+                        <div id="buttonset_3" class="uk-width-1-4">
+                            <a href="#" data-action="checkWiederholung"     id="wiederholungen" class="editorButton uk-button uk-width-1-1 wiederholungen"><i class="uk-icon"></i> Wiederholungen</a>
+                        </div>
+                        <div id="buttonset_4" class="uk-width-1-4">
+                            <a href="#" data-action="checkWortlaenge"       id="wortlaenge" class="editorButton uk-button uk-width-1-1 wortlaenge"><i class="uk-icon"></i> Wortlänge</a>
+                            <a href="#" data-action="checkSatzlaenge"       id="lange_saetze" class="editorButton uk-button uk-width-1-1 lange-saetze"><i class="uk-icon"></i> Lange Sätze</a>
+							<a href="#funktionen" class="uk-button uk-button-info uk-button-small uk-width-1-1" style="margin-top: 36px;"><i class="uk-icon-info-circle"></i> Erläuterungen</a>
+                        </div>
+                    </div>
+            <div class="uk-text-center uk-margin-top uk-margin-remove-bottom" style="color: #ff0000;"><i class="uk-icon-arrow-down"></i> Fügen Sie in das Textfeld des Editors den Text ein, den Sie überprüfen möchten <i class="uk-icon-arrow-down"></i></div>
+            <div id='textarea_1' class="editor_container">
+                        <textarea class="textarea_1" name="content" cols="50" rows="15">
+                        </textarea>
+                    </div>
+
+<div class="uk-panel uk-panel-box uk-padding-remove"><strong>Wichtiger Hinweis zum Text-Optimierer</strong><br />Der Text-Optimierer kann einen erfahrenen Texter nicht ersetzen. Das Werkzeug unterstützt Texter und leichtert die Arbeit. Die Markierungen zeigen, wo der Text optimiert werden könnte. Nicht mehr, aber auch nicht weniger. Markierungen verstehen Sie bitte nur als Hinweis. Es geht nicht um richtig oder falsch. Jeder Texter entscheidet, wie er mit den Informationen umgeht. Es ist durchaus möglich, dass markierte Formulierungen in bestimmten Branchen oder Berufen üblich sind. Regeln dürfen auch bewusst gebrochen werden. Es bleibt die Aufgabe des Texters, einen informativen und ansprechenden Text zu schreiben.</div><br />
+
+                    <style>
+                        #bugreportbox
+                        {
+                            text-align: right;
+                        }
+
+                        #bugreportbox legend
+                        {
+                            text-align: left;
+                            padding: 0;
+                        }
+
+                        #bugreportbox select, #bugreportbox textarea
+                        {
+                            width: 100%;
+                            margin-bottom: 10px;
+                        }
+
+                        #bugreportbox textarea
+                        {
+                            font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;
+                            font-size: 13px;
+                            max-width: 100%;
+                            min-height: 150px;
+                            height: 150px;
+                        }
+
+                        #bugreportbox .uk-panel
+                        {
+                            display: none;
+                        }
+
+                        #bugreportbox .form-panel
+                        {
+                            display: none;
+                        }
+
+                        #bugreportbox .toggle
+                        {
+                            float: right;
+                        }
+
+                        #bugreportbox .toggle
+                        {
+                            float: right;
+                        }
+
+                        #bugreportbox .toggle i
+                        {
+                            cursor: pointer;
+                            font-size: 16px;
+                        }
+
+                        #bugreportbox .bugToggleLink
+                        {
+                            text-decoration: underline;
+                        }
+                    </style>
+                    <div class="uk-panel uk-panel-box"><form id="bugreportbox" class="uk-form" action="" method="post">
+                        
+                            <legend>Sie haben Anmerkungen oder Verbesserungsvorschläge? <a class="bugToggleLink">Klicken Sie hier!</a> <span class="toggle"><i class="uk-icon-chevron-down"></i></span></legend>
+
+                            <div class="form-panel">
+                                <select name="type">
+                                    <option>Bitte wählen Sie eine Kategorie aus</option>
+                                    <?php foreach($arrBugGroups as $arrBugGroup):?>
+                                        <?php if($arrBugGroup->id > 0):?>
+                                            <optgroup label="<?=utf8_encode($arrBugGroup->name);?>">
+                                                <?php foreach($arrBugGroup['options'] as $arrBugOption):?>
+                                                <option value="<?=$arrBugOption->id;?>"><?=utf8_encode($arrBugOption->name);?></option>
+                                                <?php endforeach;?>
+                                            </optgroup>
+                                        <?php else: ?>
+                                            <?php foreach($arrBugGroup['options'] as $arrBugOption):?>
+                                                <option value="<?=$arrBugOption->id;?>"><?=utf8_encode($arrBugOption->name);?></option>
+                                            <?php endforeach;?>
+                                        <?php endif; ?>
+                                    <?php endforeach;?>
+                                </select>
+                                <br/>
+                                <textarea name="commit"></textarea>
+                                <br/>
+								<div class="uk-panel uk-panel-box" style="text-align: center; font-weight: bold; background: #c5e9bd;">Vielen Dank für Ihre Nachricht.</div>
+								<br/>
+                                <button class="uk-button uk-button-success">Anmerkungen senden</button>
+                            </div>
+                    </form></div>
+					
+				<h2 id="funktionen">Die Funktionen im Überblick</h2>
+
+			<p>Der Pulitzer-Preis ist bei Journalisten und Autoren ebenso begehrt,
+			wie der Oscar in der Filmindustrie. Der Stifter und Namensgeber des
+			Preises war der Journalist, Zeitungsverleger und Herausgeber Joseph
+			Pulitzer. Er bringt für uns die Regeln für gute Texte auf den Punkt:
+			<p><strong>Schreibe kurz und sie werden es lesen,<br />
+			schreibe klar und sie werden es verstehen,<br />
+			schreibe anschaulich und sie werden es behalten.</strong></p>
+
+			Die nachfolgenden Themenfelder helfen Ihnen, den Rat von Joseph Pulitzer
+			umzusetzen.</p>
+                    <div class="uk-accordion" data-uk-accordion>
+
+                        <h3 class="uk-accordion-title" style="background: #9ce3ff; border: 1px solid #444;">Floskeln<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Floskeln sind Worthülsen, Blabla, Gefasel, Geschwafel, Binsenweisheiten, Selbstverständlichkeiten, Umschweife, Gemeinplätze, Banalitäten und somit nur überflüssiges Geschwätz. Verzichten Sie auf langweilige, kraftlose, inhaltsleere und nichtssagende Wörter! Alle Wörter, die wir in Ihrem Text als Floskeln einstufen, werden über den Button „Floskeln“ farblich markiert. Falls Sie das Ergebnis erschreckt, sollten Sie sich unter dem Menüpunkt „Checklisten, Infos“ die Informationen zu floskelfreien Stellenanzeigen ansehen. Dort erfahren Sie, was Bewerber unter den Begriffen „flexibel“ und „belastbar“ verstehen könnten. Die Bandbreite möglicher Interpretationen überrascht. Dieses Erlebnis kann helfen, konkreter zu formulieren. Sie entscheiden, ob Sie die markierten Floskel belassen, ersatzlos streichen oder ersetzen.</div>
+
+                        <h3 class="uk-accordion-title" style="background: #c7d66f; border: 1px solid #444;">Negative Wörter<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Beschreiben Sie Sachverhalte positiv. Sorgen Sie für gute Gefühle bei den Lesern. Verneinungen (nicht, keine, ohne, un...) und Wörter mit negativen Assoziationen führen zu Missklängen. Wir können nicht an etwas nicht denken. Sie kennen vermutlich das Beispiel mit dem rosa Elefanten. Nach der Aufforderung, nicht an einen rosa Elefanten zu denken, sieht praktisch jeder einen rosa Elefanten vor seinem geistigen Auge.
+                            <br /><br />
+                            Klicken Sie auf „Negative Wörter“ und formulieren Sie die markierten Wörter positiv.
+                        </div>
+
+                        <h3 class="uk-accordion-title" style="background: #ffb979; border: 1px solid #444;">Textverständnis<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Ob Leser einen Text verstehen, hängt vom Text, der Bildung des Lesers und weiteren Faktoren abhängig. Vergessen Sie nicht, dass Stellenausschreibungen Werbetexte sind. Wer liest schon Werbetexte mit voller Konzentration? Verwenden Sie daher einfache Worte. Vermeiden Sie Abkürzungen, Fachbegriffe und Fremdwörter wo immer es geht. Als Regel gilt die Empfehlung von Arthur Schopenhauer: „Man gebrauche gewöhnliche Worte und sage ungewöhnliche Dinge.“
+                            <br /><br />
+                            Als Basis für die Überprüfung des Textverständnisses sind in Datenbank der TOOLBOX fast eine Million deutsche Wörter gespeichert. Jedes Wort, das nicht in diesem Grundwortschatz enthalten ist, wird markiert. Prüfen Sie kritisch, ob es ein bedeutungsgleiches oder ähnliches Wort gibt, das leichter verstanden wird.
+                        </div>
+
+                        <h3 class="uk-accordion-title" style="background: #ff8c87; border: 1px solid #444;">Anglizismen<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Es gibt verschiedene Formen von Anglizismen. Anglizismen, die einem Lehnwortstatus gleich kommen, jedoch nicht phonetisch und grammatisch der deutschen Sprache angepasst sind (z.B. Sport, fair); Anglizismen, die neue Sachverhalte bezeichnen, für die keine deutsche Entsprechung existiert (z.B. E-Mail, Airbag) und Anglizismen die neben existierenden, leicht verständlichen deutschen Bezeichnungen auftreten. Während die ersten beiden Formen kaum ersetzt werden können ohne Verwirrung zu schaffen, erschweren Anglizismen der letzten Form das Textverständnis unnötig. Solche Anglizismen verdrängen oft gute und aussagekräftige deutsche Wörter. Auch international tätige Unternehmen tun gut daran, Bewerber in der Landessprache anzusprechen.
+                        </div>
+
+                        <h3 class="uk-accordion-title" style="background: #8ffce6; border: 1px solid #444;">Nominalstil<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Als Nominalstil bezeichnet man Satzkonstruktionen mit übermäßig vielen Substantiven und Substantivierungen. Der Nominalstil wird hauptsächlich in der Behörden- und Wissenschaftssprache verwendet. Er wirkt schwerfällig und distanziert. Im Gegensatz dazu wirkt eine verbale Ausdrucksweise anschaulich und lebendig. Kein Wunder, denn auch beim Sprechen verwenden wir hauptsächlich den Verbalstil. Der Verbalstil wirkt aktiver und emotionaler.
+                            <br /><br />
+                            Substantivierungen lassen sich am besten an ihren Endungen (Suffixen) -keit, -heit, -mut, -nis, -schaft, -ung, -tum, -ling, -sal, -tion, -ive, -anz, -tät erkennen. Klicken Sie auf den Button „Nominalstil“. Die markierten Substantivierungen sollten Sie anschließend in den Verbalstil ändern.
+                        </div>
+
+                        <h3 class="uk-accordion-title" style="background: #f8deca; border: 1px solid #444;">Aktiv-Passiv<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Das Passiv bezeichnet man auch als die Leideform eines Verbs. Es leidet auch der Leser. Wenn Sie ein treffendes Verb gefunden haben, sollten Sie es nicht in eine Passivkonstruktion pressen. Passivsätze machen jeden Text hölzern und langweilig. Beispiel gefällig?<br />
+                            Passiv: „Die Ampel wurde von dem Autofahrer übersehen.“<br />
+                            Aktiv: „Der Autofahrer übersah die Ampel.“<br />
+                            Passiv: „Das Problem kann von uns gelöst werden“.<br />
+                            Aktiv: „Wir können das Problem lösen" oder "Wir lösen das Problem“.<br />
+                            Die aktive Form eines Verbs klingt nicht nur besser, sie ist auch kürzer.
+                        </div>
+
+                        <h3 class="uk-accordion-title" style="background: #cfc0ff; border: 1px solid #444;">Wiederholungen<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Wiederholungen können Stilmittel sein. Beispiele kennen Sie aus Reimen, aus Refrains und natürlich aus der Werbung. Die VW-Werbung "Er läuft und läuft und läuft ..." brannte die Langlebigkeit des Käfers über Jahrzehnte in die Hirne der Autofahrer. In Stellenanzeigen langweilen Wiederholungen praktisch immer. Abwechslung ist gefragt. Das Zauberwort heißt Synonyme. Ausdrücke, die den gleichen oder einen sehr ähnlichen Bedeutungsumfang haben, helfen uns aus der Patsche. Gut gewählte Synonyme machen Texte lebendiger und die Aussagen präziser. Statt zu arbeiten kann jemand aufgehen, sich befassen, beschäftigen, hantieren, etwas herstellen, montieren, nachdenken, etwas schaffen, tüfteln, verändern, wirken oder handeln.<br />
+                            <br />
+                            Der Text-Optimierer markiert für Sie Wiederholungen. In Synonym-Wörterbuchern oder Datenbanken finden Sie schnell andere Begriffe. Gerne empfehlen wir <a href="http://www.wortschatz.uni-leipzig.de" target="_blank">www.wortschatz.uni-leipzig.de</a>, <a href="http://www.woerterbuch.info" target="_blank">www.woerterbuch.info</a>, <a href="http://www.duden.de/hilfe/synonyme" target="_blank">www.duden.de/hilfe/synonyme</a> und <a href="http://www.openthesaurus.de" target="_blank">www.openthesaurus.de</a>
+                        </div>
+
+                        <h3 class="uk-accordion-title" style="background: #fffacc; border: 1px solid #444;">Wort- und Satzlänge<i class="accordion-arrow uk-icon-chevron-down"></i></h3>
+                        <div class="uk-accordion-content">Wortwahl und Schreibstil sind wichtig. Daneben entscheiden Wort- und Satzlänge, ob Leser den Inhalt sofort verstehen. "Schreibe kurz!", rät uns Joseph Pulitzer. Die Presseagentur dpa. geht als Obergrenze für "optimale" Verständlichkeit von 9 Wörtern pro Satz aus. Ein Satz in der BILD-Zeitung besteht durchschnittlich aus nur 12 Wörtern. Der Text-Optimierer markiert alle Sätze mit mehr als 15 Wörtern. Mehrere Sprachwissenschaftler halten dies für die Obergrenze leicht verständlicher Texte. Verständlich schreiben heißt immer auch Wörter kürzen. Je kürzer ein Wort ist, desto intensiver und klarer ist es meist. "Liebe", "Trauer", "Hass", "Stolz", "Angst" - viele starke Wörter haben nur eine Silbe. Und sind darum viel kraftvoller und leichter verständlich als Umschreibungen wie "emotionale Befindlichkeit". Der Text-Optimierer markiert Wörter mit mehr als 14 Buchstaben.
+                        </div>
+                    </div>
+			
+			
+				
+
+			</div>
+			
+            </div>
+        </div>
+    </div>
+
+<div style="display: none;" class="tempText"></div>
+<div style="display: none;" class="tempText2"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Init Editor
+        strEditorId = 'textarea_1';
+        createEditor(strEditorId, function(ed){
+            ed.addButton("printSinglePDF", {
+                id:         "printPDFNormal",
+                classes:    "widget btn buttonDisable",
+                tooltip:    "Drucken",
+                icon:       "print",
+                onclick: function()
+                {
+                    $.fileDownload('/check/public/includes/ajax/editor.php',
+                        {
+                            httpMethod: 'POST',
+                            data : {
+                                action  : 'printSinglePDF',
+                                text    : ed.getContent({format : 'raw'})
+                            }
+                        })
+                        .fail(function (e) {
+                            alert('Es ist ein Fehler beim generieren der PDF Datei aufgetreten, bitte versuchen Sie es erneut.\nError: '+e);
+                        });
+                }
+            });
+        });
+
+        var activeButtonset = '';
+
+        $('.editorButton').click(function()
+        {
+            var $objButton      = $(this);
+            var strAction       = $(this).data().action
+            var objActiveEditor = tinyMCE.activeEditor;
+            thisButtonset       = $(this).parent().attr('id');
+
+            arrColorsToButtons                     = new Object();
+            arrColorsToButtons['floskeln']         = 'highlight_blue';
+            arrColorsToButtons['textverstaendnis'] = 'highlight_orange';
+            arrColorsToButtons['anglizismen']      = 'highlight_red';
+            arrColorsToButtons['aktiv_passiv']     = 'highlight_lightgreen';
+            arrColorsToButtons['nominalstil']      = 'highlight_lightblue';
+            arrColorsToButtons['wiederholungen']   = 'highlight_plumbpink';
+            arrColorsToButtons['wortlaenge']       = 'highlight_pink';
+            arrColorsToButtons['lange_saetze']     = 'highlight_yellow';
+
+            // falls der Button aktiv geschaltet ist entfernen wir bei erneutem Klick das Highlighting
+            if ($(this).hasClass('active'))
+            {
+                $objButton.toggleClass("active");
+                var id = $(this).attr('id');
+                console.log($('iframe').contents().find('span.'+id));
+
+                $('iframe').contents().find('span.'+id).each(function(){
+                    $(this).removeClass(id);
+                });
+                $('iframe').contents().find('span').each(function(){
+                    if(this.classList.length == 0)
+                        $(this).replaceWith($(this).html());
+                });
+                /*
+                 $('iframe').contents().find('span').each(function()
+                 {
+                 // @TODO BUGFIX: Er löscht den SPAN obwohl mehr als 1 Klasse drinnen ist.
+                 // Wenn this mehr als eine Klasse hat und die Klasse Id besitzt
+                 if($(this).hasClass(id) && this.classList.length > 1)
+                 {
+                 // Entferne Klasse
+                 $(this).removeClass(id);
+                 }
+                 // Wenn this die Klasse Id besitzt
+                 else if ($(this).hasClass(id))
+                 {
+                 // Entferne SPAN
+                 text = $(this).text();
+                 $(this).replaceWith(text);
+                 }
+
+                 });
+                 */
+            }
+            // andernfalls prüfen wir den Text und fügen das Highlighting hinzu
+            else
+            {
+                // falls die aktuelle Spalte nicht der aktiven Spalte entspricht
+                if (activeButtonset != thisButtonset)
+                {
+                    // Markierungen entfernen
+                    markierungenAufheben(strEditorId, 'Ma_parent_' + strEditorId);
+
+                    // active-Markierung entfernen
+                    if (activeButtonset != '' && thisButtonset != activeButtonset) {
+                        $('#' + activeButtonset + ' a').removeClass('active');
+                    }
+                    activeButtonset = thisButtonset;
+                }
+
+                $.ajax({
+                    url: "/check/public/includes/ajax/editor.php",
+                    method: 'post',
+                    async: true,
+                    data: {
+                        action: strAction,
+                        text: objActiveEditor.getContent({format : 'raw'})
+                    },
+                    beforeSend: function(jqXHR) {
+                        jqXHR.overrideMimeType('text/html;charset=utf-8');
+                        $objButton.toggleClass("active");
+                    },
+                    success : function (data) {
+
+                        /*
+                         Temp speicherung des Textes
+
+                         Das DIV wird als Temp Speicher verwendet, da jQuery mit großen Texten nicht arbeiten kann
+                         und diese einfach abschneidet.
+                         */
+                        var objContent  = $('.tempText').append(data);
+
+                        // Suche nach allen Spans im Text
+                        var objSpans   = objContent.find('span');
+
+                        function cloneClasses(objParent, objChild){
+                            // Git eine Array mit allen Klassen eines Objekts
+                            var arrParentClasses    = objParent[0].classList;
+                            if(arrParentClasses.length > 0) {
+                                for(i in arrParentClasses)
+                                {
+                                    if(typeof arrParentClasses[i] == "string")
+                                    {
+                                        // Falls Classe nicht im Kind Object vorhanden ist wird sie hinzugefügt
+                                        if(!objChild.hasClass(arrParentClasses[i]))
+                                            objChild.addClass(arrParentClasses[i]);
+                                    }
+                                }
+                            }
+                        }
+
+                        // Geht alle Spans in einer Schleife durch
+                        objSpans.each(function(){
+                            var objSpan       = $(this);
+                            var objParent      = objSpan.parent();
+
+                            // Überprüft ob der parent ein SPAN ist
+                            if(objParent.prop("tagName") == "SPAN"){
+                                cloneClasses(objParent, objSpan);
+                            }
+
+                            // Geht alle Kind Objekte des Span durch
+                            objSpan.children().each(function(){
+                                // Überprüft ob das Kind ein SPAN ist
+                                if($(this).prop("tagName") == "SPAN"){
+                                    cloneClasses(objSpan, $(this));
+                                }
+                            });
+                        });
+
+                        // setzt den Editor Inhalt
+                        objActiveEditor.setContent(objContent.html());
+
+                        // leert den Temp Speicher
+                        objContent.empty();
+                    }
+                });
+            }
+        });
+
+        $('#markierungenAufheben').click(function(e){
+            e.preventDefault();
+            markierungenAufheben(strEditorId, 'Ma_parent_' + strEditorId);
+            $('[id^="buttonset_"] a').removeClass('active');
+        });
+
+        $('#bugreportbox .toggle i, #bugreportbox .bugToggleLink').click(function(){
+            var objButton               = this;
+            $('#bugreportbox .form-panel').slideToggle(500, function(){
+                if($(this).css('display') == 'block')
+                    if(objButton.className != 'bugToggleLink')
+                        $(objButton).removeClass("uk-icon-chevron-down").addClass("uk-icon-chevron-up");
+                else
+                    if(objButton.className != 'bugToggleLink')
+                        $(objButton).removeClass("uk-icon-chevron-up").addClass("uk-icon-chevron-down");
+            });
+        });
+
+        $('#bugreportbox').submit(function(e)
+        {
+            e.preventDefault();
+            var arrForm                 = $(this).serializeArray();
+            var arrAjaxForm             = new Object();
+
+            for(i in arrForm)
+                arrAjaxForm[arrForm[i]['name']] = arrForm[i]['value'];
+
+            if(isNaN(parseInt(arrAjaxForm['type'])) || arrAjaxForm['commit'].length == 0)
+            {
+                if(isNaN(parseInt(arrAjaxForm['type'])))
+                {
+                    $('#bugreportbox select[name="type"]').css('box-shadow', '0 0 2px 0 #F00');
+                    setTimeout(function(){
+                        $('#bugreportbox select[name="type"]').css('box-shadow', '0 0 0 0 #F00');
+                    }, 3000);
+                }
+
+                if(arrAjaxForm['commit'].length == 0)
+                {
+                    $('#bugreportbox textarea[name="commit"]').css('box-shadow', '0 0 2px 0 #F00');
+                    setTimeout(function(){
+                        $('#bugreportbox textarea[name="commit"]').css('box-shadow', '0 0 0 0 #F00');
+                    }, 3000);
+                }
+                return;
+            }
+
+
+
+            arrAjaxForm['content']      = tinyMCE.activeEditor.getContent({format : 'raw'});
+
+            $.ajax({
+                type    : "POST",
+                url     : '<?= $this->url('homepage/default', array('controller' => 'Index', 'action' => 'ajaxReport')); ?>',
+                data    : arrAjaxForm
+            }).done(function(e){
+                $('#bugreportbox .uk-panel').slideToggle(600);
+                console.loh("Complete");
+            }).error(function(error){
+                console.log(error);
+            });
+
+        });
+
+        $('#behaviorProfilesResults .header .dlButton').click(function(){
+            var objButton     = this;
+            var objCardAnswer = $(this).parent().parent().children('.profileCardAnswer');
+        });
+
+        $('[data-uk-accordion]').on('toggle.uk.accordion', function(event, active, toggle, content){
+            $('[data-uk-accordion] .uk-accordion-title .accordion-arrow').each(function(){
+                $(this).removeClass("uk-icon-chevron-up").addClass('uk-icon-chevron-down ');
+            });
+            if(active)
+                $(toggle).find('.accordion-arrow').removeClass("uk-icon-chevron-down").addClass("uk-icon-chevron-up");
+        });
+    });
+</script>
+
+
+
+
