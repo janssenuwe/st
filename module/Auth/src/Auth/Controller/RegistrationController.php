@@ -147,6 +147,9 @@ class RegistrationController extends AbstractActionController
         $form = new CompleteRegistrationForm();
         $viewModel = new ViewModel(array('token' => $token, 'form' => $form));
 
+//        echo "<pre>";
+//        var_dump("viewModel type  =  " . get_class($viewModel));
+//        die();
 
         $viewModel->setTerminal(true);
 

@@ -11,7 +11,7 @@ exit;
 
 
 global $link;
-$link = mysqli_connect('dedi1612.your-server.de','stellu_3_w','NpFK5uxhj3UzGpVH','stellu_db1_kopie');
+$link = mysqli_connect('dedi1612.your-server.de','stellu_1_w','bWE12BCRpH1mRbqK','stellu_db1');
 $link->set_charset("utf8");
 header('Content-Type: text/html; charset=UTF-8');
 mb_internal_encoding('UTF-8');

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST' || !isset($_POST) || !isset($_POST['act
     exit;
 
 // Database connection
-$objDB = mysqli_connect('dedi1612.your-server.de', 'stellu_3_w', 'NpFK5uxhj3UzGpVH', 'stellu_db1_kopie');
+$objDB = mysqli_connect('dedi1612.your-server.de', 'stellu_1_w', 'bWE12BCRpH1mRbqK', 'stellu_db1');
 $objDB->set_charset("utf8");
 
 // Set Charset

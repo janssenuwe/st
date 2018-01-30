@@ -45,6 +45,12 @@ class MailUtil
         if ($bcc != null) {
             $message->addBcc($bcc);
         }
+        // create a text message as well
+        $text          = new MimePart($strEmail);
+        $text->type = "text/plain";
+
+        // STE-XXX: enclose html message in html tags
+        $strEmail = "<html>" . $strEmail . "</html>";
 
         $html           = new MimePart($strEmail);
         $html->type     = "text/html";
@@ -52,9 +58,12 @@ class MailUtil
         $body           = new MimeMessage();
         $transport      = $serviceLocator->get('mail.transport');
 
-        $body->addPart($html);
+        //$body->addPart($html);
+        $body->setParts(array($text,$html));
         $message->setEncoding("UTF-8");
         $message->setBody($body);
+
+        $message->getHeaders()->get('content-type')->setType('multipart/alternative');
 
         $options = new Mail\Transport\SmtpOptions(
             array(
