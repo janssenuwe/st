@@ -1,4 +1,0 @@
-AuthUserFile /usr/www/users/stellu//check_kopie//.htpasswd
-AuthName "Realm"
-AuthType Basic
-require valid-user
