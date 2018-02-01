@@ -25,16 +25,11 @@ return array(
                      => 'Zend\Db\Adapter\AdapterServiceFactory',
          ),
      ),
-    'mail' => array(
+     'mail' => array(
         'transport' => array(
             'options' => array(
                 'host'              => 'mail.dedi1612.your-server.de',
                 'connection_class'  => 'plain',
-                'connection_config' => array(
-                    'username' => 'no-reply@stellenanzeigen-texten.de',
-                    'password' => '56he8K249UpE95sf',
-                    'ssl' => 'tls'
-                ),
             ),
         ),
     ),

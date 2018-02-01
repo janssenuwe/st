@@ -45,8 +45,8 @@ class MailUtil
         if ($bcc != null) {
             $message->addBcc($bcc);
         }
-        // create a text message as well
-        $text          = new MimePart($strEmail);
+        // create an empty text message as well
+        $text          = new MimePart("");
         $text->type = "text/plain";
 
         // STE-XXX: enclose html message in html tags
@@ -65,14 +65,11 @@ class MailUtil
 
         $message->getHeaders()->get('content-type')->setType('multipart/alternative');
 
-        $options = new Mail\Transport\SmtpOptions(
-            array(
-                'name'  => self::HOST_AND_DOMAIN_NAME,
-                'host'  =>  self::LOCAL_IP,
-                'port' => self::MAIL_PORT,
-            )
-        );
-        $transport->setOptions($options);
+
+        /** @var  \Zend\Mail\Transport\Smtp $transport */
+//        $options = $transport->getOptions();
+//        print("<pre>".print_r($options,true)."</pre>");
+//        die();
         // Note: send() might throw an exception which is to be caught in calling method
         $transport->send($message);
     }
