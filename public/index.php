@@ -13,8 +13,18 @@ if (php_sapi_name() === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['RE
     return false;
 }
 
+// STTE-6 force switching to https, even if URL is retyped or changed
+forceHttps();
+
 // Setup autoloading
 require 'init_autoloader.php';
 
 // Run the application!
 Zend\Mvc\Application::init(require 'config/application.config.php')->run();
+
+function forceHttps() {
+    if($_SERVER['SERVER_PORT'] != '443') {
+        header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+        exit();
+    }
+}

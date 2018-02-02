@@ -19,6 +19,8 @@ use Auth\Form\ForgottenPasswordForm;
 use Auth\Form\ForgottenPasswordFilter;
 use CsnBase\Zend\Validator\ConfirmPassword;
 
+
+
 /**
 *   Monitors every Action, which handles Registration, Forgotten Passwort and Confirmation
 */  

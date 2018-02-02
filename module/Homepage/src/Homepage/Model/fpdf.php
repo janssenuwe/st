@@ -73,7 +73,7 @@ var $PDFVersion;         // PDF version number
 *                               Public methods                                 *
 *                                                                              *
 *******************************************************************************/
-function FPDF($orientation='P', $unit='mm', $size='A4')
+function __construct($orientation='P', $unit='mm', $size='A4')
 {
 	// Some checks
 	$this->_dochecks();
@@ -518,7 +518,6 @@ function SetFont($family, $style='', $size=0)
 		return;
 	// Test if font is already loaded
 	$fontkey = $family.$style;
-	print_r($this->CoreFonts);
 	if(!isset($this->fonts[$fontkey]))
 	{
 		// Test if one of the core fonts
